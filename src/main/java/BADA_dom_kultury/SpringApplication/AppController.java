@@ -22,6 +22,8 @@ public class AppController implements WebMvcConfigurer {
         registry.addViewController("/main_user").setViewName("user/main_user");
     }
 
+
+
     @Controller
     public class DashboardController
     {
