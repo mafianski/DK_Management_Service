@@ -115,8 +115,4 @@ public class WynagrodzeniaDAO {
         String sql = "DELETE FROM Wynagrodzenia WHERE nr_wynagrodzenia = ?";
         jdbcTemplate.update(sql, nr_wynagrodzenia);
     }
-
-
-
-
 }
