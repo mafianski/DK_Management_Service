@@ -27,7 +27,7 @@ public class WydarzenieDAO {
     }
 
     public List<Wydarzenie> list() {
-        String sql = "SELECT * FROM Wydarzenia";
+        String sql = "SELECT * FROM Wydarzenia ORDER BY data_start ASC";
 
         try {
             List<Wydarzenie> listWydarzenie = jdbcTemplate.query(sql, (rs, rowNum) -> {

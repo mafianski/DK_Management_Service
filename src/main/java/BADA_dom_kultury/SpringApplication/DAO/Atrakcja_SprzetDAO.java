@@ -44,9 +44,9 @@ public class Atrakcja_SprzetDAO {
         insertActor.execute(param);
     }
 
-    public Atrakcja_Sprzet get(int id_atrakcji){
+    public Atrakcja_Sprzet get(int nr_atrakcji){
         String sql = "SELECT * FROM Atrakcja_Sprzet WHERE nr_atrakcji = ?";
-        Atrakcja_Sprzet atrakcja_sprzet = jdbcTemplate.queryForObject(sql, new Object[]{id_atrakcji}, BeanPropertyRowMapper.newInstance(Atrakcja_Sprzet.class));
+        Atrakcja_Sprzet atrakcja_sprzet = jdbcTemplate.queryForObject(sql, new Object[]{nr_atrakcji}, BeanPropertyRowMapper.newInstance(Atrakcja_Sprzet.class));
         return atrakcja_sprzet;
     }
 

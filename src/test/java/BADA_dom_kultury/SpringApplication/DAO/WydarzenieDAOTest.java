@@ -49,9 +49,9 @@ class WydarzenieDAOTest {
 
     @Test
     void testSave() throws ParseException {
-        String startDateString = "2025-04-03";
-        String endDateString = "2025-06-03";
-        Wydarzenie wydarzenie = new Wydarzenie(2, "ABCDE", 100, startDateString, endDateString, 5, 3);
+        String startDateString = "2025-01-18";
+        String endDateString = "2025-01-18";
+        Wydarzenie wydarzenie = new Wydarzenie(2, "Spotkanie z politykiem", 50, startDateString, endDateString, 5, 3);
         dao.save(wydarzenie);
     }
 

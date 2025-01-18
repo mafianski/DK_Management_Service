@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class Wynagrodzenia {
     private int nr_wynagrodzenia;
-    private Date data;
+    private String data;
     private BigDecimal kwota_brutto;
     private BigDecimal kwota_netto;
     private int nr_pracownika;
@@ -14,7 +14,7 @@ public class Wynagrodzenia {
     public Wynagrodzenia() {
     }
 
-    public Wynagrodzenia(int nr_wynagrodzenia, Date data, BigDecimal kwota_brutto, BigDecimal kwota_netto, int nr_pracownika) {
+    public Wynagrodzenia(int nr_wynagrodzenia, String data, BigDecimal kwota_brutto, BigDecimal kwota_netto, int nr_pracownika) {
         super();
         this.nr_wynagrodzenia = nr_wynagrodzenia;
         this.data = data;
@@ -31,11 +31,11 @@ public class Wynagrodzenia {
         this.nr_wynagrodzenia = nr_wynagrodzenia;
     }
 
-    public Date getData() {
+    public String getData() {
         return data;
     }
 
-    public void setData(Date data) {
+    public void setData(String data) {
         this.data = data;
     }
 

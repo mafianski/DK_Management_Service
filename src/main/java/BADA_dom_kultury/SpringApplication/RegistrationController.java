@@ -57,8 +57,6 @@ public class RegistrationController {
             e.printStackTrace();
         }
 
-        // Jeśli chciałbyś kontynuować z zapisem do bazy danych, będzie to później w tym miejscu
-
 
         //dodawanie zarejestrowanego użytkownika do bazy danych
         //Zosatawiam zakomentowane żeby ci błędów nie wywalało

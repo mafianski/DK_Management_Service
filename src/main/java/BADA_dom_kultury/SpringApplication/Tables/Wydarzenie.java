@@ -31,15 +31,15 @@ public class Wydarzenie {
     }
 
     public String addImageUrl(String nazwa) {
-        if(nazwa.equals("Koncert")) {
+        if(nazwa.toLowerCase().contains("koncert")) {
             return "/images/koncert.jpg";
-        } else if(nazwa.equals("Wystawa")) {
+        } else if(nazwa.toLowerCase().contains("wystawa")) {
             return "/images/wystawa.jpg";
-        } else if(nazwa.equals("Spektakl")) {
+        } else if(nazwa.toLowerCase().contains("spektakl")) {
             return "/images/spektakl.jpg";
-        } else if(nazwa.equals("Warsztaty")) {
+        } else if(nazwa.toLowerCase().contains("warsztaty")) {
             return "/images/warsztaty.jpg";
-        } else if(nazwa.equals("Spotkanie")) {
+        } else if(nazwa.toLowerCase().contains("spotkanie")) {
             return "/images/spotkanie.jpg";
         } else {
             return "/images/brak_zdjecia.jpg";
