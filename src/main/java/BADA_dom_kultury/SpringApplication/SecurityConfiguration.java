@@ -6,6 +6,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -16,22 +17,24 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
                 .withUser("user")
-                .password("user")
+                .password(getPasswordEncoder().encode("user"))  // Hasło musi być zakodowane!
                 .roles("USER")
                 .and()
                 .withUser("admin")
-                .password("admin")
+                .password(getPasswordEncoder().encode("admin"))  // Hasło musi być zakodowane!
                 .roles("ADMIN");
     }
 
+
     @Bean
-    public PasswordEncoder getPasswordEncoder() { return NoOpPasswordEncoder.getInstance();
+    public PasswordEncoder getPasswordEncoder() {
+        return new BCryptPasswordEncoder(); // Używaj bcrypt do hashowania haseł
     }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-
-                .antMatchers("/", "/index", "/events").permitAll()
+                .antMatchers("/", "/index", "/events", "/register").permitAll()
                 .antMatchers("/resources/static/**").permitAll()
                 .antMatchers("/main").authenticated()
                 .antMatchers("/main_admin").access("hasRole('ADMIN')")
