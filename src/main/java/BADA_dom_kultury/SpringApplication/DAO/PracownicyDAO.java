@@ -63,7 +63,7 @@ public class PracownicyDAO {
     public void save(Pracownicy pracownik){
         // Przygotowanie zapytania SQL
         String sql = "INSERT INTO PRACOWNICY (nr_pracownika, imie, nazwisko, data_urodzenia, telefon, email, pesel, plec, nr_domu_kultury, nr_adresu, nr_stanowiska) " +
-                "VALUES (?, ?, ?, TO_DATE(?, 'yyyy.MM.dd'), ?, ?, ?, ?, ?, ?, ?)";
+                "VALUES (?, ?, ?, TO_DATE(?, 'yyyy-MM-dd'), ?, ?, ?, ?, ?, ?, ?)";
 
         try {
             // Pobieranie daty urodzenia i konwertowanie na format 'dd.MM.yyyy'
@@ -111,7 +111,7 @@ public class PracownicyDAO {
             // Przetwarzanie pola DATA_URODZENIA na String w formacie dd.MM.yyyy
             java.sql.Date dataUrodzenia = rs.getDate("DATA_URODZENIA");
             if (dataUrodzenia != null) {
-                java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy.MM.dd");
+                java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
                 p.setData_urodzenia(sdf.format(dataUrodzenia)); // Przechowywanie jako String w odpowiednim formacie
             }
 
@@ -128,7 +128,7 @@ public class PracownicyDAO {
         // Konwersja daty urodzenia (String na java.sql.Date)
         if (pracownik.getData_urodzenia() != null) {
             try {
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 java.util.Date dateUrodzenia = sdf.parse(pracownik.getData_urodzenia());
                 pracownik.setData_urodzenia(new java.sql.Date(dateUrodzenia.getTime()).toString());
             } catch (ParseException e) {

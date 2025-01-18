@@ -60,7 +60,7 @@ public class UczestnicyDAO {
 
     public void save(Uczestnicy uczestnicy){
         String sql = "INSERT INTO UCZESTNICY (nr_uczestnika, imie, nazwisko, data_urodzenia, telefon, email, nr_domu_kultury) " +
-                "VALUES (?, ?, ?, TO_DATE(?, 'yyyy.MM.dd'), ?, ?, ?)";
+                "VALUES (?, ?, ?, TO_DATE(?, 'yyyy-MM-dd'), ?, ?, ?)";
         try {
             // Pobieranie daty urodzenia i konwertowanie na format 'dd.MM.yyyy'
             String dataUrodzenia = uczestnicy.getData_urodzenia();
@@ -99,7 +99,7 @@ public class UczestnicyDAO {
             // Przetwarzanie pola DATA_URODZENIA na String w formacie dd.MM.yyyy
             java.sql.Date dataUrodzenia = rs.getDate("DATA_URODZENIA");
             if (dataUrodzenia != null) {
-                java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy.MM.dd");
+                java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
                 p.setData_urodzenia(sdf.format(dataUrodzenia)); // Przechowywanie jako String w odpowiednim formacie
             }
 
@@ -115,7 +115,7 @@ public class UczestnicyDAO {
         // Konwersja daty urodzenia (String na java.sql.Date)
         if (uczestnik.getData_urodzenia() != null) {
             try {
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 java.util.Date dateUrodzenia = sdf.parse(uczestnik.getData_urodzenia());
                 uczestnik.setData_urodzenia(new java.sql.Date(dateUrodzenia.getTime()).toString());
             } catch (ParseException e) {

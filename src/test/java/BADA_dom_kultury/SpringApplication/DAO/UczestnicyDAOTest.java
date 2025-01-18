@@ -35,14 +35,14 @@ class UczestnicyDAOTest {
 
     @Test
     void testSave() {
-        String dataUrodzenia = "1995.01.01";
+        String dataUrodzenia = "1995-01-01";
         Uczestnicy uczestnik = new Uczestnicy(0, "michal", "michalewski", dataUrodzenia, "123456789", "michal@gmail.com", 3);
         dao.save(uczestnik);
     }
 
     @Test
     void testGet() {
-        int id = 4;
+        int id = 5;
         Uczestnicy uczestnik = dao.get(id);
         if (uczestnik != null) {
             System.out.println(uczestnik);
@@ -52,14 +52,14 @@ class UczestnicyDAOTest {
 
     @Test
     void testUpdate() {
-        String dataUrodzenia = "1997.01.01";
-        Uczestnicy uczestnik = new Uczestnicy(3, "Jan", "Kowalski", dataUrodzenia, "123456789", "abcd@gmail.com", 3);
+        String dataUrodzenia = "1997-01-01";
+        Uczestnicy uczestnik = new Uczestnicy(5, "Jan", "Kowalski", dataUrodzenia, "123456789", "abcd@gmail.com", 3);
         dao.update(uczestnik);
     }
 
     @Test
     void delete() {
-        int id = 4;
+        int id = 5;
         dao.delete(id);
     }
 }

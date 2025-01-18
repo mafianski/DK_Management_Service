@@ -33,7 +33,7 @@ class PracownicyDAOTest {
 
     @Test
     void testSave() {
-        String dataUrodzenia = "1995.01.01";
+        String dataUrodzenia = "1995-01-01";
         Pracownicy pracownik = new Pracownicy(0, "Jan", "Kowalski", dataUrodzenia, "123456789", "123@gmail.com", "12345678901", "M", 3, 3, 3);
         dao.save(pracownik);
     }
@@ -50,14 +50,14 @@ class PracownicyDAOTest {
 
     @Test
     void update() {
-        String dataUrodzenia = "1997.01.01";
+        String dataUrodzenia = "1997-01-01";
         Pracownicy pracownik = new Pracownicy(3, "Jan", "Kowalski", dataUrodzenia, "123456789", "123@gmail.com", "12345678901", "M", 3, 3, 3);
         dao.update(pracownik);
     }
 
     @Test
     void delete() {
-        int id = 5;
+        int id = 6;
         dao.delete(id);
     }
 }

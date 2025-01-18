@@ -1,13 +1,17 @@
 package BADA_dom_kultury.SpringApplication;
 
+import BADA_dom_kultury.SpringApplication.DAO.UczestnicyDAO;
 import BADA_dom_kultury.SpringApplication.DTO.UserDTO;
+import BADA_dom_kultury.SpringApplication.Tables.Uczestnicy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -18,6 +22,9 @@ public class RegistrationController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
@@ -51,6 +58,24 @@ public class RegistrationController {
         }
 
         // Jeśli chciałbyś kontynuować z zapisem do bazy danych, będzie to później w tym miejscu
+
+
+        //dodawanie zarejestrowanego użytkownika do bazy danych
+        //Zosatawiam zakomentowane żeby ci błędów nie wywalało
+        //todo odkomentować
+        /*
+        Uczestnicy uczestnik = new Uczestnicy();
+        uczestnik.setImie(userDTO.getFirstName());
+        uczestnik.setNazwisko(userDTO.getLastName());
+        uczestnik.setData_urodzenia(userDTO.getDob());
+        uczestnik.setTelefon(userDTO.getPhoneNumber());
+        uczestnik.setEmail(userDTO.getEmail());
+        uczestnik.setNr_domu_kultury(3);
+        UczestnicyDAO uczetnikDAO = new UczestnicyDAO(jdbcTemplate);
+        uczetnikDAO.save(uczestnik);
+        */
+
+
 
         return "redirect:/login";  // Przekierowanie po rejestracji
     }
