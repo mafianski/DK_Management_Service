@@ -47,7 +47,6 @@
             padding: 5px 0;
         }
 
-        /* Flexbox container for cards */
         .row {
             display: flex;
             flex-wrap: wrap;
@@ -55,19 +54,23 @@
             gap: 15px; /* Przerwa między kartami */
         }
 
-        /* Ustawienia dla szerokości ekranu 576px i większej */
         @media (min-width: 576px) {
             .col-md-4 {
-                flex: 1 0 calc(33.333% - 15px); /* Trzy kolumny, uwzględniając przerwę między kartami */
+                flex: 1 1 calc(33.333% - 15px);
+                max-width: calc(33.333% - 15px);
             }
         }
 
-        /* Ustawienia dla ekranów poniżej 576px */
         @media (max-width: 575px) {
             .col-md-4 {
-                flex: 1 0 100%; /* Na małych ekranach karty w jednej kolumnie */
+                flex: 1 0 100%;
             }
         }
+
+        .row {
+            justify-content: center;
+        }
+
     </style>
 </head>
 <body>
