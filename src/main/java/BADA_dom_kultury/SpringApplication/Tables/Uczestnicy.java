@@ -7,7 +7,7 @@ public class Uczestnicy {
     private int nr_uczestnika;
     private String imie;
     private String nazwisko;
-    private Date data_urodzenia;
+    private String data_urodzenia;
     private String telefon;
     private String email;
     private int nr_domu_kultury;
@@ -15,7 +15,7 @@ public class Uczestnicy {
     public Uczestnicy() {
     }
 
-    public Uczestnicy(int nr_uczestnika, String imie, String nazwisko, Date data_urodzenia, String telefon, String email, int nr_domu_kultury) {
+    public Uczestnicy(int nr_uczestnika, String imie, String nazwisko, String data_urodzenia, String telefon, String email, int nr_domu_kultury) {
         super();
         this.nr_uczestnika = nr_uczestnika;
         this.imie = imie;
@@ -50,11 +50,11 @@ public class Uczestnicy {
         this.nazwisko = nazwisko;
     }
 
-    public Date getData_urodzenia() {
+    public String getData_urodzenia() {
         return data_urodzenia;
     }
 
-    public void setData_urodzenia(Date data_urodzenia) {
+    public void setData_urodzenia(String data_urodzenia) {
         this.data_urodzenia = data_urodzenia;
     }
 

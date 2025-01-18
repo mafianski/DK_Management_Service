@@ -7,7 +7,7 @@ public class Pracownicy {
     private int nr_pracownika;
     private String imie;
     private String nazwisko;
-    private Date data_urodzenia;
+    private String data_urodzenia;
     private String email;
     private String telefon;
     private String pesel;
@@ -19,7 +19,7 @@ public class Pracownicy {
     public Pracownicy() {
     }
 
-    public Pracownicy(int nr_pracownika, String imie, String nazwisko, Date data_urodzenia, String email, String telefon, String pesel, String plec, int nr_domu_kultury, int nr_adresu, int nr_stanowiska) {
+    public Pracownicy(int nr_pracownika, String imie, String nazwisko, String data_urodzenia, String email, String telefon, String pesel, String plec, int nr_domu_kultury, int nr_adresu, int nr_stanowiska) {
         super();
         this.nr_pracownika = nr_pracownika;
         this.imie = imie;
@@ -58,11 +58,11 @@ public class Pracownicy {
         this.nazwisko = nazwisko;
     }
 
-    public Date getData_urodzenia() {
+    public String getData_urodzenia() {
         return data_urodzenia;
     }
 
-    public void setData_urodzenia(Date data_urodzenia) {
+    public void setData_urodzenia(String data_urodzenia) {
         this.data_urodzenia = data_urodzenia;
     }
 

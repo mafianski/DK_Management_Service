@@ -76,7 +76,7 @@ public class WydarzenieDAO {
     public void save(Wydarzenie wydarzenie) {
         // Przygotowanie zapytania SQL
         String sql = "INSERT INTO Wydarzenia (nr_wydarzenia, nazwa, liczba_miejsc, data_start, data_koniec, nr_sali, nr_domu_kultury) " +
-                "VALUES (?, ?, ?, TO_DATE(?, 'dd.MM.yyyy'), TO_DATE(?, 'dd.MM.yyyy'), ?, ?)";
+                "VALUES (?, ?, ?, TO_DATE(?, 'yyyy.MM.dd'), TO_DATE(?, 'yyyy.MM.dd'), ?, ?)";
 
         try {
             // Konwertowanie daty na String w formacie yyyy.MM.dd
@@ -117,14 +117,14 @@ public class WydarzenieDAO {
             // Przetwarzanie pola DATA_START na String w formacie dd.MM.yyyy
             java.sql.Date dataStart = rs.getDate("DATA_START");
             if (dataStart != null) {
-                java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd.MM.yyyy");
+                java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy.MM.dd");
                 w.setData_start(sdf.format(dataStart)); // Przechowywanie jako String w odpowiednim formacie
             }
 
             // Przetwarzanie pola DATA_KONIEC na String w formacie dd.MM.yyyy
             java.sql.Date dataKoniec = rs.getDate("DATA_KONIEC");
             if (dataKoniec != null) {
-                java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd.MM.yyyy");
+                java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy.MM.dd");
                 w.setData_koniec(sdf.format(dataKoniec)); // Przechowywanie jako String w odpowiednim formacie
             }
 
@@ -142,7 +142,7 @@ public class WydarzenieDAO {
         // Konwersja daty startowej (String na java.sql.Date)
         if (wydarzenie.getData_start() != null) {
             try {
-                SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
                 java.util.Date dateStart = sdf.parse(wydarzenie.getData_start());
                 wydarzenie.setData_start(new java.sql.Date(dateStart.getTime()).toString());
             } catch (ParseException e) {
@@ -154,7 +154,7 @@ public class WydarzenieDAO {
         // Konwersja daty końcowej (String na java.sql.Date)
         if (wydarzenie.getData_koniec() != null) {
             try {
-                SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
                 java.util.Date dateKoniec = sdf.parse(wydarzenie.getData_koniec());
                 wydarzenie.setData_koniec(new java.sql.Date(dateKoniec.getTime()).toString());
             } catch (ParseException e) {
