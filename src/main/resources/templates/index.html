@@ -5,7 +5,31 @@
     <title>Welcome Page</title>
 
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+    <style>
+        .welcome-section {
+            background-image: url('/images/dom_kultury.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 50px 0;
+        }
 
+        .events-section {
+            text-align: center;
+            padding: 30px 0;
+        }
+
+        .events-section a {
+            color: blue;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+
+        .events-section a:hover {
+            color: darkblue;
+        }
+    </style>
 </head>
 
 <!-- <body th:style="'background: url(/assets/img/img.png) no-repeat center center fixed;'"> -->
@@ -20,53 +44,24 @@
 
 
 <!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
-    <div class="container">
-        <a class="navbar-brand" href="/">Dom Kultury</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-                aria-controls="navbarResponsive"
-                aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto align-items-center">
+<div th:replace="fragments/header :: header"></div>
 
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Home
-                        <span class="sr-only">(current)</span>
-                    </a>
-                </li>
+<div class="welcome-section">
+    <h1>Welcome to the home page!</h1>
+    <p>This is the main landing page of the application.</p>
+</div>
 
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/main}">Main</a>
-                </li>
-
-                <li class="nav-item" th:if="${#request.remoteUser == null}">
-                    <a class="nav-link" th:href="@{/main}">Login</a>
-                </li>
-
-                <li class="nav-item" th:if="${#request.remoteUser != null}">
-                    <a class="nav-link" th:inline="text" style="color:lightskyblue;">You are logged in as <b
-                            style="text-transform:capitalize">[[${#httpServletRequest.remoteUser}]]</b></a>
-                </li>
-
-                <li class="nav-item" th:if="${#request.remoteUser != null}">
-                    <form th:action="@{/index}" method="post" style="display:inline;">
-                        <button class="btn btn-danger btn-sm" type="submit" onclick="successfullyLogout()">Logout</button>
-                    </form>
-                </li>
-
-            </ul>
-        </div>
-    </div>
-</nav>
-
+<!-- Sekcja wydarzeń -->
+<div class="events-section">
+    <h2>Events</h2>
+    <p>Discover our <a th:href="@{/events}">upcoming and ongoing events</a>!</p>
+</div>
 
 <!--Using images in page    -->
 <!-- <img th:src="@{/assets/img/img.png}" alt="Image" class="img-fluid"> -->
 
 
-<div class="container">
+<!--<div class="container">
     <div class="row">
         <div class="col-md-10 mt-5">
 
@@ -77,7 +72,7 @@
 
         </div>
     </div>
-</div>
+</div> -->
 
 <!--<div align="center">
     <h1>Sales Records</h1>
