@@ -51,23 +51,27 @@ class WydarzenieDAOTest {
     void testSave() throws ParseException {
         String startDateString = "03.04.2025";
         String endDateString = "03.06.2025";
-        Wydarzenie wydarzenie = new Wydarzenie(0, "Koncert", 100, startDateString, endDateString, 5, 3);
-        dao.save(wydarzenie);
-        wydarzenie = new Wydarzenie(1, "Warsztaty", 100, startDateString, endDateString, 5, 3);
-        dao.save(wydarzenie);
-        wydarzenie = new Wydarzenie(2, "ABCDE", 100, startDateString, endDateString, 5, 3);
+        Wydarzenie wydarzenie = new Wydarzenie(2, "ABCDE", 100, startDateString, endDateString, 5, 3);
         dao.save(wydarzenie);
     }
 
     @Test
-    void get() {
+    void testGet() {
+        int id = 2;
+        Wydarzenie wydarzenie = dao.get(id);
+        System.out.println(wydarzenie);
+        assertNotNull(wydarzenie);
     }
 
     @Test
-    void update() {
+    void testUpdate() {
+        Wydarzenie wydarzenie = new Wydarzenie(2, "Koncert", 100, "21.05.2021", "22.05.2021", 5, 3);
+        dao.update(wydarzenie);
     }
 
     @Test
     void delete() {
+        int id = 4;
+        dao.delete(id);
     }
 }
