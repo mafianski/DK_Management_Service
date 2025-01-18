@@ -19,7 +19,12 @@ public class EventController {
     public String showEventsPage(Model model) {
         List<Wydarzenie> wydarzenia = List.of(
                 new Wydarzenie(1, "Koncert", "/images/koncert.jpg", "01.20.2025", "01.20.2025", 20),
-                new Wydarzenie(2, "Warsztaty", "/images/warsztaty.jpg", "01.22.2025", "01.25.2025", 50)
+                new Wydarzenie(2, "Warsztaty", "/images/warsztaty.jpg", "01.22.2025", "01.25.2025", 50),
+                new Wydarzenie(3, "Warsztaty", "/images/warsztaty.jpg", "01.22.2025", "01.25.2025", 50),
+                new Wydarzenie(4, "Warsztaty", "/images/warsztaty.jpg", "01.22.2025", "01.25.2025", 50),
+                new Wydarzenie(5, "Warsztaty", "/images/warsztaty.jpg", "01.22.2025", "01.25.2025", 50),
+                new Wydarzenie(6, "Warsztaty", "/images/warsztaty.jpg", "01.22.2025", "01.25.2025", 50),
+                new Wydarzenie(7, "Warsztaty", "/images/warsztaty.jpg", "01.22.2025", "01.25.2025", 50)
         );
         model.addAttribute("wydarzenia", wydarzenia);
         return "events";
