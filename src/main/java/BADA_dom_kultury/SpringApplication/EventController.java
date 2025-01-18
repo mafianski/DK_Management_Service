@@ -46,7 +46,7 @@ public class EventController {
     }
 
 
-    @PostMapping("/register")
+    @PostMapping("/event_register")
     public String registerForEvent(@RequestParam("eventId") int eventId, HttpServletRequest request) {
         String username = request.getUserPrincipal().getName();
         // Obsługa zapisu użytkownika na wydarzenie (np. zapis do bazy danych)
