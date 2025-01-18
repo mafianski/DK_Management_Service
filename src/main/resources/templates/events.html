@@ -3,17 +3,87 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Events</title>
-    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css}"/>
+    <style>
+        .event-card {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+        }
+
+        .event-card img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .event-card button {
+            margin-top: 10px;
+        }
+
+        .modal-content img {
+            max-width: 100%;
+            border-radius: 10px;
+        }
+    </style>
 </head>
 <body>
-<div th:replace="fragments/header :: header"></div>
+<!-- Nagłówek -->
+<header th:replace="fragments/header :: header"></header>
 
-<div class="container mt-5">
-    <h1>Upcoming and Ongoing Events</h1>
+<div class="container mt-4">
+    <!-- Tekst na górze strony -->
+    <div th:if="${#httpServletRequest.remoteUser == null}" class="alert alert-info text-center">
+        Aby zapisać się na wydarzenie, <a th:href="@{/login}">zaloguj się</a>.
+    </div>
+    <div th:if="${#httpServletRequest.remoteUser != null}" class="alert alert-success text-center">
+        Kliknij w wydarzenie, by się zapisać.
+    </div>
+
     <div class="row">
-        <div class="col-md-12">
-            <p>Here you can see the list of all events happening now or in the future.</p>
-            <!-- Wydarzenia zostaną zaimplementowane później -->
+        <div class="col-md-4" th:each="wydarzenie : ${wydarzenia}">
+            <div class="event-card">
+                <img th:src="@{${wydarzenie.imageUrl}}" alt="Event Image"/>
+                <h3 th:text="${wydarzenie.Nazwa}"></h3>
+                <p><strong>Start:</strong> <span th:text="${wydarzenie.Data_start}"></span></p>
+                <p><strong>End:</strong> <span th:text="${wydarzenie.Data_koniec}"></span></p>
+                <p><strong>Liczba miejsc:</strong> <span th:text="${wydarzenie.Liczba_miejsc}"></span></p>
+                <button class="btn btn-primary" data-toggle="modal" data-target="#eventModal"
+                        th:attr="data-id=${wydarzenie.Nr_wydarzenia}, data-name=${wydarzenie.Nazwa}, data-start=${wydarzenie.Data_start}, data-end=${wydarzenie.Data_koniec}, data-img=${wydarzenie.imageUrl}">
+                    More info
+                </button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Modal dla szczegółów wydarzenia -->
+<div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="eventModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="eventModalLabel">Szczegóły wydarzenia</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <img id="modalEventImage" src="" alt="Event Image"/>
+                <h3 id="modalEventName"></h3>
+                <p><strong>Start:</strong> <span id="modalEventStart"></span></p>
+                <p><strong>End:</strong> <span id="modalEventEnd"></span></p>
+            </div>
+            <div class="modal-footer">
+                <form th:if="${#httpServletRequest.remoteUser != null}" method="post" th:action="@{/events/register}">
+                    <input type="hidden" id="eventIdInput" name="eventId"/>
+                    <button type="submit" class="btn btn-primary">Zapisz się</button>
+                </form>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
+            </div>
         </div>
     </div>
 </div>
@@ -21,5 +91,23 @@
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script>
+    // Obsługa modala dla szczegółów wydarzenia
+    $('#eventModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var id = button.data('id');
+        var name = button.data('name');
+        var start = button.data('start');
+        var end = button.data('end');
+        var img = button.data('img');
+
+        var modal = $(this);
+        modal.find('#modalEventName').text(name);
+        modal.find('#modalEventStart').text(start);
+        modal.find('#modalEventEnd').text(end);
+        modal.find('#modalEventImage').attr('src', img);
+        modal.find('#eventIdInput').val(id);
+    });
+</script>
 </body>
 </html>
