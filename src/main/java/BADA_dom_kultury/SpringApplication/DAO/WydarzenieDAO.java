@@ -100,18 +100,75 @@ public class WydarzenieDAO {
 
 
 
-    public Wydarzenie get(int nr_wydarzenia){
-        String sql = "SELECT * FROM Wydarzenia WHERE nr_wydarzenia = ?";
-        Wydarzenie wydarzenie = jdbcTemplate.queryForObject(sql, new Object[]{nr_wydarzenia}, BeanPropertyRowMapper.newInstance(Wydarzenie.class));
+    public Wydarzenie get(int nr_wydarzenia) {
+        String sql = "SELECT * FROM Wydarzenia WHERE NR_WYDARZENIA = ?";
+
+        // Użycie queryForObject z własnym RowMapperem
+        Wydarzenie wydarzenie = jdbcTemplate.queryForObject(sql, new Object[]{nr_wydarzenia}, (rs, rowNum) -> {
+            Wydarzenie w = new Wydarzenie();
+
+            // Mapowanie pozostałych pól
+            w.setNr_wydarzenia(rs.getInt("NR_WYDARZENIA"));
+            w.setNazwa(rs.getString("NAZWA"));
+            w.setLiczba_miejsc(rs.getInt("LICZBA_MIEJSC"));
+            w.setNr_sali(rs.getInt("NR_SALI"));
+            w.setNr_domu_kultury(rs.getInt("NR_DOMU_KULTURY"));
+
+            // Przetwarzanie pola DATA_START na String w formacie dd.MM.yyyy
+            java.sql.Date dataStart = rs.getDate("DATA_START");
+            if (dataStart != null) {
+                java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd.MM.yyyy");
+                w.setData_start(sdf.format(dataStart)); // Przechowywanie jako String w odpowiednim formacie
+            }
+
+            // Przetwarzanie pola DATA_KONIEC na String w formacie dd.MM.yyyy
+            java.sql.Date dataKoniec = rs.getDate("DATA_KONIEC");
+            if (dataKoniec != null) {
+                java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd.MM.yyyy");
+                w.setData_koniec(sdf.format(dataKoniec)); // Przechowywanie jako String w odpowiednim formacie
+            }
+
+            return w;
+        });
+
         return wydarzenie;
     }
 
-    public void update(Wydarzenie wydarzenie){
-        String sql = "UPDATE Wydarzenia SET nazwa=:nazwa, liczba_miejsc=:liczba_miejsc, data_start=:data_start, data_koniec=:data_koniec, nr_sali=:id_sali, nr_domu_kultury=:nr_domu_kultury WHERE nr_wydarzenia=:nr_wydarzenia";
+
+
+    public void update(Wydarzenie wydarzenie) {
+        String sql = "UPDATE Wydarzenia SET nazwa=:nazwa, liczba_miejsc=:liczba_miejsc, data_start=:data_start, data_koniec=:data_koniec, nr_sali=:nr_sali, nr_domu_kultury=:nr_domu_kultury WHERE nr_wydarzenia=:nr_wydarzenia";
+
+        // Konwersja daty startowej (String na java.sql.Date)
+        if (wydarzenie.getData_start() != null) {
+            try {
+                SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+                java.util.Date dateStart = sdf.parse(wydarzenie.getData_start());
+                wydarzenie.setData_start(new java.sql.Date(dateStart.getTime()).toString());
+            } catch (ParseException e) {
+                // Obsługa wyjątku, jeśli format daty jest nieprawidłowy
+                e.printStackTrace();
+            }
+        }
+
+        // Konwersja daty końcowej (String na java.sql.Date)
+        if (wydarzenie.getData_koniec() != null) {
+            try {
+                SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+                java.util.Date dateKoniec = sdf.parse(wydarzenie.getData_koniec());
+                wydarzenie.setData_koniec(new java.sql.Date(dateKoniec.getTime()).toString());
+            } catch (ParseException e) {
+                // Obsługa wyjątku, jeśli format daty jest nieprawidłowy
+                e.printStackTrace();
+            }
+        }
+
+        // Parametryzowanie zapytania
         BeanPropertySqlParameterSource param = new BeanPropertySqlParameterSource(wydarzenie);
         NamedParameterJdbcTemplate template = new NamedParameterJdbcTemplate(jdbcTemplate);
         template.update(sql, param);
     }
+
 
     public void delete(int nr_wydarzenia){
         String sql = "DELETE FROM Wydarzenia WHERE nr_wydarzenia = ?";
