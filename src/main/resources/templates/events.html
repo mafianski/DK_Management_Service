@@ -9,14 +9,28 @@
             border: 1px solid #ddd;
             border-radius: 10px;
             padding: 15px;
-            margin: 15px 0;
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+            margin-bottom: 15px; /* Przerwa poniżej karty */
         }
 
         .event-card img {
             max-width: 100%;
             height: auto;
+            max-height: 200px; /* Ustawienie maksymalnej wysokości obrazka */
             border-radius: 10px;
+            object-fit: cover; /* Utrzymuje proporcje obrazka */
+        }
+
+        .event-card .event-details {
+            flex-grow: 1;
+            padding: 10px 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .event-card button {
@@ -26,6 +40,33 @@
         .modal-content img {
             max-width: 100%;
             border-radius: 10px;
+        }
+
+        .event-card h3, .event-card p {
+            margin: 0;
+            padding: 5px 0;
+        }
+
+        /* Flexbox container for cards */
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 15px; /* Przerwa między kartami */
+        }
+
+        /* Ustawienia dla szerokości ekranu 576px i większej */
+        @media (min-width: 576px) {
+            .col-md-4 {
+                flex: 1 0 calc(33.333% - 15px); /* Trzy kolumny, uwzględniając przerwę między kartami */
+            }
+        }
+
+        /* Ustawienia dla ekranów poniżej 576px */
+        @media (max-width: 575px) {
+            .col-md-4 {
+                flex: 1 0 100%; /* Na małych ekranach karty w jednej kolumnie */
+            }
         }
     </style>
 </head>
@@ -46,10 +87,12 @@
         <div class="col-md-4" th:each="wydarzenie : ${wydarzenia}">
             <div class="event-card">
                 <img th:src="@{${wydarzenie.imageUrl}}" alt="Event Image"/>
-                <h3 th:text="${wydarzenie.Nazwa}"></h3>
-                <p><strong>Start:</strong> <span th:text="${wydarzenie.Data_start}"></span></p>
-                <p><strong>End:</strong> <span th:text="${wydarzenie.Data_koniec}"></span></p>
-                <p><strong>Liczba miejsc:</strong> <span th:text="${wydarzenie.Liczba_miejsc}"></span></p>
+                <div class="event-details">
+                    <h3 th:text="${wydarzenie.Nazwa}"></h3>
+                    <p><strong>Start:</strong> <span th:text="${wydarzenie.Data_start}"></span></p>
+                    <p><strong>End:</strong> <span th:text="${wydarzenie.Data_koniec}"></span></p>
+                    <p><strong>Liczba miejsc:</strong> <span th:text="${wydarzenie.Liczba_miejsc}"></span></p>
+                </div>
                 <button class="btn btn-primary" data-toggle="modal" data-target="#eventModal"
                         th:attr="data-id=${wydarzenie.Nr_wydarzenia}, data-name=${wydarzenie.Nazwa}, data-start=${wydarzenie.Data_start}, data-end=${wydarzenie.Data_koniec}, data-img=${wydarzenie.imageUrl}">
                     More info
