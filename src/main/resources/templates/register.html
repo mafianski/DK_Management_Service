@@ -2,64 +2,68 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Register</title>
-
+    <title>Registration Page</title>
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css}"/>
-    <style>
-        body {
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #f8f9fa;
-        }
-
-        .register-container {
-            background: #fff;
-            border-radius: 8px;
-            padding: 30px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 400px;
-        }
-    </style>
 </head>
 <body>
 
-<div class="register-container">
-    <h2>Register</h2>
-    <form method="post" th:action="@{/register}">
-        <div class="form-group">
-            <label for="firstName">Imię:</label>
-            <input type="text" class="form-control" id="firstName" name="firstName" required />
-        </div>
-        <div class="form-group">
-            <label for="lastName">Nazwisko:</label>
-            <input type="text" class="form-control" id="lastName" name="lastName" required />
-        </div>
-        <div class="form-group">
-            <label for="dob">Data urodzenia:</label>
-            <input type="date" class="form-control" id="dob" name="dob" required />
-        </div>
-        <div class="form-group">
-            <label for="phoneNumber">Nr telefonu:</label>
-            <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" />
-        </div>
-        <div class="form-group">
-            <label for="email">E-mail:</label>
-            <input type="email" class="form-control" id="email" name="email" />
-        </div>
-        <div class="form-group">
-            <label for="username">Login:</label>
-            <input type="text" class="form-control" id="username" name="username" required />
-        </div>
-        <div class="form-group">
-            <label for="password">Hasło:</label>
-            <input type="password" class="form-control" id="password" name="password" required />
-        </div>
-        <button type="submit" class="btn btn-primary">Zarejestruj się</button>
-    </form>
+<!-- Navigation: Header at the top of the page -->
+<div th:replace="fragments/header :: header"></div> <!-- This will insert the header -->
 
+<!-- Main content container -->
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2 class="text-center">Create a New Account</h2>
+            <form method="post" th:action="@{/register}">
+                <!-- Imię -->
+                <div class="form-group">
+                    <label for="firstName">First Name:</label>
+                    <input id="firstName" type="text" class="form-control" name="firstName" required maxlength="20"/>
+                </div>
+
+                <!-- Nazwisko -->
+                <div class="form-group">
+                    <label for="lastName">Last Name:</label>
+                    <input id="lastName" type="text" class="form-control" name="lastName" required maxlength="20"/>
+                </div>
+
+                <!-- Data Urodzenia -->
+                <div class="form-group">
+                    <label for="dob">Date of Birth:</label>
+                    <input id="dob" type="date" class="form-control" name="dob" required/>
+                </div>
+
+                <!-- Numer Telefonu -->
+                <div class="form-group">
+                    <label for="phoneNumber">Phone Number (optional):</label>
+                    <input id="phoneNumber" type="text" class="form-control" name="phoneNumber" maxlength="15" pattern="^\d{1,15}$"/>
+                    <small class="form-text text-muted">Phone number can contain up to 15 digits.</small>
+                </div>
+
+                <!-- E-mail -->
+                <div class="form-group">
+                    <label for="email">Email (optional):</label>
+                    <input id="email" type="email" class="form-control" name="email" maxlength="40"/>
+                </div>
+
+                <!-- Login -->
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input id="username" type="text" class="form-control" name="username" required/>
+                </div>
+
+                <!-- Hasło -->
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input id="password" type="password" class="form-control" name="password" required/>
+                </div>
+
+                <!-- Submit -->
+                <button type="submit" class="btn btn-primary btn-block">Register</button>
+            </form>
+        </div>
+    </div>
 </div>
 
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
