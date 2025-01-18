@@ -1,5 +1,8 @@
 package BADA_dom_kultury.SpringApplication.Tables;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Objects;
 
 public class Wydarzenie {
@@ -27,7 +30,7 @@ public class Wydarzenie {
         this.imageUrl = addImageUrl(this.nazwa);
     }
 
-    private String addImageUrl(String nazwa) {
+    public String addImageUrl(String nazwa) {
         if(nazwa.equals("Koncert")) {
             return "/images/koncert.jpg";
         } else if(nazwa.equals("Wystawa")) {
