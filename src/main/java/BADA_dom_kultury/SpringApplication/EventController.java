@@ -18,13 +18,13 @@ public class EventController {
     @GetMapping("/events")
     public String showEventsPage(Model model) {
         List<Wydarzenie> wydarzenia = List.of(
-                new Wydarzenie(1, "Koncert", "/images/koncert.jpg", "01.20.2025", "01.20.2025", 20),
-                new Wydarzenie(2, "Warsztaty", "/images/warsztaty.jpg", "01.22.2025", "01.25.2025", 50),
-                new Wydarzenie(3, "Warsztaty", "/images/warsztaty.jpg", "01.22.2025", "01.25.2025", 50),
-                new Wydarzenie(4, "Warsztaty", "/images/warsztaty.jpg", "01.22.2025", "01.25.2025", 50),
-                new Wydarzenie(5, "Warsztaty", "/images/warsztaty.jpg", "01.22.2025", "01.25.2025", 50),
-                new Wydarzenie(6, "Warsztaty", "/images/warsztaty.jpg", "01.22.2025", "01.25.2025", 50),
-                new Wydarzenie(7, "Warsztaty", "/images/warsztaty.jpg", "01.22.2025", "01.25.2025", 50)
+                new Wydarzenie(1, "Koncert", 20, "01.20.2025", "01.20.2025", 1, 1),
+                new Wydarzenie(2, "Warsztaty", 50, "01.20.2025", "01.20.2025", 1, 1),
+                new Wydarzenie(3, "Warsztaty", 50, "01.20.2025", "01.20.2025", 1, 1),
+                new Wydarzenie(4, "Warsztaty", 50, "01.20.2025", "01.20.2025", 1, 1),
+                new Wydarzenie(5, "Warsztaty", 50, "01.20.2025", "01.20.2025", 1, 1),
+                new Wydarzenie(6, "Warsztaty", 50, "01.20.2025", "01.20.2025", 1, 1),
+                new Wydarzenie(7, "Warsztaty", 50, "01.20.2025", "01.20.2025", 1, 1)
         );
         model.addAttribute("wydarzenia", wydarzenia);
         return "events";
@@ -38,3 +38,5 @@ public class EventController {
         return "redirect:/events?success";
     }
 }
+
+
