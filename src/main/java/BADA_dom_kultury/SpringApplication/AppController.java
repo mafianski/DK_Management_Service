@@ -21,6 +21,7 @@ public class AppController implements WebMvcConfigurer {
         registry.addViewController("/admin/employees").setViewName("admin/manage-employees");
         registry.addViewController("/main_admin").setViewName("admin/main_admin");
         registry.addViewController("/main_user").setViewName("user/main_user");
+        registry.addViewController("/main_worker").setViewName("worker/main_worker");
     }
 
 
@@ -43,6 +44,11 @@ public class AppController implements WebMvcConfigurer {
                             ("USER")) {
                 return "redirect:/main_user";
             }
+            else if
+            (request.isUserInRole
+                            ("WORKER")) {
+                return "redirect:/main_worker";
+            }
             else
             {
                 return "redirect:/index";
@@ -57,5 +63,9 @@ public class AppController implements WebMvcConfigurer {
     @RequestMapping(value={"/main_user"})
     public String showUserPage(Model model) {
         return "user/main_user";
+    }
+    @RequestMapping(value={"/main_worker"})
+    public String showWorkerPage(Model model) {
+        return "worker/main_worker";
     }
 }

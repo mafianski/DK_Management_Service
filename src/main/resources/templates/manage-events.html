@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Zarządzaj wydarzeniami</title>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css}"/>
+    <style>
+        th, td {
+            text-align: center;
+            vertical-align: middle;
+        }
+        .table th:nth-child(1),
+        .table td:nth-child(1),
+        .table th:nth-child(3),
+        .table td:nth-child(3),
+        .table th:nth-child(5),
+        .table td:nth-child(5),
+        .table th:nth-child(6),
+        .table td:nth-child(6),
+        .table th:nth-child(7),
+        .table td:nth-child(7) {
+            width: 8%; /* Mniejsze szerokości dla większości kolumn */
+        }
+        .table th:nth-child(2),
+        .table td:nth-child(2) {
+            width: 12%; /* Większa szerokość dla nazwy */
+        }
+        .btn-action {
+            margin-right: 5px; /* Odstęp między przyciskami */
+            padding: 5px 10px; /* Zmniejszony rozmiar przycisków */
+        }
+    </style>
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+<div class="container mt-5">
+    <h1 class="mt-4">Zarządzaj wydarzeniami</h1>
+
+    <table class="table table-bordered mt-3">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nazwa</th>
+            <th>Miejsca</th>
+            <th>Data rozpoczęcia</th>
+            <th>Data zakończenia</th>
+            <th>Nr sali</th>
+            <th>Nr domu kultury</th>
+            <th>Akcje</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="wydarzenie : ${wydarzenia}">
+            <td th:text="${wydarzenie.nr_wydarzenia}"></td>
+            <td th:text="${wydarzenie.nazwa}"></td>
+            <td th:text="${wydarzenie.liczba_miejsc}"></td>
+            <td th:text="${wydarzenie.data_start}"></td>
+            <td th:text="${wydarzenie.data_koniec}"></td>
+            <td th:text="${wydarzenie.nr_sali}"></td>
+            <td th:text="${wydarzenie.nr_domu_kultury}"></td>
+            <td>
+                <!--TODO: działanie przycisków -->
+                <button type="button" class="btn btn-success btn-sm btn-action">Uczestnicy</button>
+                <form th:action="@{/manage-events/modify}" method="post" class="d-inline">
+                    <input type="hidden" name="eventId" th:value="${wydarzenie.nr_wydarzenia}"/>
+                    <button type="submit" class="btn btn-primary btn-sm btn-action">Modyfikuj</button>
+                </form>
+                <form th:if="${isAdmin}" th:action="@{/manage-events/delete}" method="post" class="d-inline">
+                    <input type="hidden" name="eventId" th:value="${wydarzenie.nr_wydarzenia}"/>
+                    <button type="submit" class="btn btn-danger btn-sm btn-action">Usuń</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script th:src="@{/webjars/jquery/3.6.0/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.0.0-2/js/bootstrap.min.js}"></script>
+</body>
+</html>

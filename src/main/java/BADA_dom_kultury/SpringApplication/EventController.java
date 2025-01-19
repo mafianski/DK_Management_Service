@@ -8,14 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
 import javax.servlet.http.HttpServletRequest;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -26,32 +21,49 @@ public class EventController {
 
     @GetMapping("/events")
     public String showEventsPage(Model model) {
+        //TODO: podmienić z przykładowych
+        //WydarzenieDAO wydarzenieDAO = new WydarzenieDAO(jdbcTemplate);
+        //List<Wydarzenie> wydarzenia = wydarzenieDAO.list();
 
-
-
-        WydarzenieDAO wydarzenieDAO = new WydarzenieDAO(jdbcTemplate);
-        List<Wydarzenie> wydarzenia = wydarzenieDAO.list();
-
-        /* Nie usuwam tylko komentuje bo ty nie bedziesz mogl pobrac z bazy danych tylko musisz z wpisanych recznie
         List<Wydarzenie> wydarzenia = List.of(
-                new Wydarzenie(0, "Koncert", 20, "01.02.2025", "01.02.2025", 1, 1),
-                new Wydarzenie(1, "Koncert", 20, "01.02.2025", "01.02.2025", 1, 1),
-                new Wydarzenie(2, "Koncert", 20, "01.02.2025", "01.02.2025", 1, 1)
+                new Wydarzenie(1, "Koncert", 100, "01.02.2025", "01.02.2025", 2, 1),
+                new Wydarzenie(2, "Warsztaty", 200, "03.02.2025", "03.02.2025", 3, 1),
+                new Wydarzenie(3, "Wystawa", 50, "05.02.2025", "10.02.2025", 1, 1)
+        );
+        model.addAttribute("wydarzenia", wydarzenia);
+        return "events"; // Strona wyświetlania wydarzeń dla użytkowników
+    }
 
+    @GetMapping("/manage-events")
+    public String manageEventsPage(Model model, HttpServletRequest request) {
+        //TODO: podmienić z przykładowych
+        //WydarzenieDAO wydarzenieDAO = new WydarzenieDAO(jdbcTemplate);
+        //List<Wydarzenie> wydarzenia = wydarzenieDAO.list();
+
+        List<Wydarzenie> wydarzenia = List.of(
+                new Wydarzenie(1, "Koncert", 100, "01.02.2025", "01.02.2025", 2, 1),
+                new Wydarzenie(2, "Warsztaty", 200, "03.02.2025", "03.02.2025", 3, 1),
+                new Wydarzenie(3, "Wystawa", 50, "05.02.2025", "10.02.2025", 1, 1)
         );
 
-         */
+        boolean isAdmin = request.isUserInRole("ADMIN");
         model.addAttribute("wydarzenia", wydarzenia);
-        return "events";
+        model.addAttribute("isAdmin", isAdmin);
+        return "manage-events";
     }
 
+    @PostMapping("/manage-events/delete")
+    public String deleteEvent(@RequestParam("eventId") int eventId, HttpServletRequest request) {
+        if (!request.isUserInRole("ADMIN")) {
+            return "redirect:/manage-events?error=unauthorized";
+        }
+        // TODO: Usuń wydarzenie z bazy danych za pomocą DAO
+        return "redirect:/manage-events?success";
+    }
 
-    @PostMapping("/event_register")
-    public String registerForEvent(@RequestParam("eventId") int eventId, HttpServletRequest request) {
-        String username = request.getUserPrincipal().getName();
-        // Obsługa zapisu użytkownika na wydarzenie (np. zapis do bazy danych)
-        return "redirect:/events?success";
+    @PostMapping("/manage-events/modify")
+    public String modifyEvent(@RequestParam("eventId") int eventId, HttpServletRequest request) {
+        // TODO: Obsługa modyfikacji wydarzenia (formularz)
+        return "redirect:/manage-events";
     }
 }
-
-

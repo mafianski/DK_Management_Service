@@ -7,7 +7,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
@@ -17,18 +16,21 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
                 .withUser("user")
-                .password(getPasswordEncoder().encode("user"))  // Hasło musi być zakodowane!
+                .password(getPasswordEncoder().encode("user"))
                 .roles("USER")
                 .and()
                 .withUser("admin")
-                .password(getPasswordEncoder().encode("admin"))  // Hasło musi być zakodowane!
-                .roles("ADMIN");
+                .password(getPasswordEncoder().encode("admin"))
+                .roles("ADMIN")
+                .and()
+                .withUser("worker") // Przykładowe konto pracownika
+                .password(getPasswordEncoder().encode("worker"))
+                .roles("WORKER");
     }
-
 
     @Bean
     public PasswordEncoder getPasswordEncoder() {
-        return new BCryptPasswordEncoder(); // Używaj bcrypt do hashowania haseł
+        return new BCryptPasswordEncoder();
     }
 
     @Override
@@ -38,7 +40,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/resources/static/**").permitAll()
                 .antMatchers("/main").authenticated()
                 .antMatchers("/main_admin").access("hasRole('ADMIN')")
+                .antMatchers("/main_worker").access("hasAnyRole('WORKER', 'ADMIN')")
                 .antMatchers("/admin/**").access("hasRole('ADMIN')")
+                .antMatchers("/worker/**").access("hasAnyRole('WORKER', 'ADMIN')")
+                .antMatchers("/manage-events").access("hasAnyRole('WORKER', 'ADMIN')")
                 .antMatchers("/main_user").access("hasRole('USER')")
                 .and()
                 .formLogin()

@@ -2,15 +2,15 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Main Admin Page</title>
+    <title>Main Worker Page</title>
 
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
     <style>
-        .admin-section {
+        .worker-section {
             margin-top: 30px;
         }
 
-        .admin-section h3 {
+        .worker-section h3 {
             font-size: 24px;
             margin-bottom: 15px;
         }
@@ -54,11 +54,10 @@
         </div>
     </div>
 
-    <div class="row admin-section">
+    <div class="row worker-section">
         <div class="col-md-12">
-            <h3>Admin Tools</h3>
+            <h3>Worker Tools</h3>
             <div class="btn-container">
-                <a th:href="@{/admin/employees}" class="btn btn-secondary btn-small">Manage Employees</a>
                 <a th:href="@{/manage-events}" class="btn btn-secondary btn-small">Manage Events</a>
             </div>
         </div>
