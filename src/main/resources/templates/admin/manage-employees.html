@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Manage Employees</title>
+    <title>Zarządzanie pracownikami</title>
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css}"/>
     <style>
         .form-group label {
@@ -19,15 +19,15 @@
 </head>
 <body>
 <div class="container mt-5">
-    <h1>Manage Employees</h1>
+    <h1>Zarządzanie pracownikami</h1>
     <div th:if="${#lists.isEmpty(employees)}">
-        <p>No employees found.</p>
+        <p>Nie znaleziono żadnych pracowników.</p>
     </div>
 
     <!-- Przycisk do przejścia do formularza dodawania pracownika -->
-    <a href="/admin/employees/add" class="btn btn-success mb-4">Add New Employee</a>
+    <a href="/admin/employees/add" class="btn btn-success mb-4">Dodaj nowego pracownika</a>
 
-    <h2 class="mt-5">Current Employees</h2>
+    <h2 class="mt-5">Obecni pracownicy</h2>
     <table class="table table-bordered">
         <thead>
         <tr>

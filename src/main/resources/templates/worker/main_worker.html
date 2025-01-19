@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Main Worker Page</title>
+    <title>Panel pracownika</title>
 
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
     <style>
@@ -27,6 +27,14 @@
             padding: 8px 10px;
             text-align: center;
         }
+
+        .info-section {
+            margin-top: 30px;
+        }
+
+        .info-section p {
+            font-size: 18px;
+        }
     </style>
 </head>
 <body>
@@ -36,29 +44,21 @@
 <div class="container">
     <div class="row">
         <div class="col-md-10 mt-5">
-            <form method="post" th:action="@{/index}">
-                <div class="form-group">
-                    <label style="font-size:30px" th:inline="text">
-                        Welcome
-                        <a style="color:lightskyblue; text-transform:capitalize">
-                            <b>[[${#httpServletRequest.remoteUser}]]</b>
-                        </a>
-                        to the main page!
-                    </label>
-                    <div style="font-size:20px">If you want to logout, click "Logout" button under this text.</div>
-                </div>
+            <div class="info-section">
+                <h2>Witaj w Portalu Pracowniczym, <span style="color:lightskyblue; text-transform:capitalize"><b>[[${#httpServletRequest.remoteUser}]]</b></span>!</h2>
+                <p>Jesteś zalogowany jako pracownik. W tym panelu możesz zarządzać wydarzeniami. Pamiętaj, aby wylogować się po zakończeniu pracy.</p>
+                <p>Portal oferuje wygodne narzędzia do zarządzania wydarzeniami w Domu Kultury. Możesz m.in. tworzyć, edytować oraz usuwać wydarzenia, a także śledzić ich status.</p>
+            </div>
 
-                <button class="btn btn-primary btn-small" type="submit" onclick="successfullyLogout()" value="Sign Out">Logout
-                </button>
-            </form>
+            <button class="btn btn-danger btn-small" type="submit" onclick="successfullyLogout()" value="Sign Out">Wyloguj się</button>
         </div>
     </div>
 
     <div class="row worker-section">
         <div class="col-md-12">
-            <h3>Worker Tools</h3>
+            <h3>Narzędzia</h3>
             <div class="btn-container">
-                <a th:href="@{/manage-events}" class="btn btn-secondary btn-small">Manage Events</a>
+                <a th:href="@{/manage-events}" class="btn btn-secondary btn-small">Zarządzaj wydarzeniami</a>
             </div>
         </div>
     </div>

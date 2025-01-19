@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Main Admin Page</title>
+    <title>Panel administratora</title>
 
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
     <style>
@@ -27,6 +27,14 @@
             padding: 8px 10px;
             text-align: center;
         }
+
+        .info-section {
+            margin-top: 30px;
+        }
+
+        .info-section p {
+            font-size: 18px;
+        }
     </style>
 </head>
 <body>
@@ -36,30 +44,22 @@
 <div class="container">
     <div class="row">
         <div class="col-md-10 mt-5">
-            <form method="post" th:action="@{/index}">
-                <div class="form-group">
-                    <label style="font-size:30px" th:inline="text">
-                        Welcome
-                        <a style="color:lightskyblue; text-transform:capitalize">
-                            <b>[[${#httpServletRequest.remoteUser}]]</b>
-                        </a>
-                        to the main page!
-                    </label>
-                    <div style="font-size:20px">If you want to logout, click "Logout" button under this text.</div>
-                </div>
+            <div class="info-section">
+                <h2>Witaj w Panelu Administratora, <span style="color:lightskyblue; text-transform:capitalize"><b>[[${#httpServletRequest.remoteUser}]]</b></span>!</h2>
+                <p>Jesteś zalogowany jako administrator. W tym panelu możesz zarządzać pracownikami oraz wydarzeniami w Domu Kultury. Pamiętaj, aby wylogować się po zakończeniu pracy.</p>
+                <p>Panel administratora daje pełną kontrolę nad wszystkimi aspektami działalności. Możesz m.in. dodawać i edytować pracowników, tworzyć, edytować oraz usuwać wydarzenia i zarządzać innymi funkcjami systemu.</p>
+            </div>
 
-                <button class="btn btn-primary btn-small" type="submit" onclick="successfullyLogout()" value="Sign Out">Logout
-                </button>
-            </form>
+            <button class="btn btn-danger btn-small" type="submit" onclick="successfullyLogout()" value="Sign Out">Wyloguj się</button>
         </div>
     </div>
 
     <div class="row admin-section">
         <div class="col-md-12">
-            <h3>Admin Tools</h3>
+            <h3>Narzędzia</h3>
             <div class="btn-container">
-                <a th:href="@{/admin/employees}" class="btn btn-secondary btn-small">Manage Employees</a>
-                <a th:href="@{/manage-events}" class="btn btn-secondary btn-small">Manage Events</a>
+                <a th:href="@{/admin/employees}" class="btn btn-secondary btn-small">Zarządzaj pracownikami</a>
+                <a th:href="@{/manage-events}" class="btn btn-secondary btn-small">Zarządzaj wydarzeniami</a>
             </div>
         </div>
     </div>

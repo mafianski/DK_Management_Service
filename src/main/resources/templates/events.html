@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Events</title>
+    <title>Wydarzenia</title>
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css}"/>
     <style>
         .event-card {
@@ -92,8 +92,8 @@
                 <img th:src="@{${wydarzenie.imageUrl}}" alt="Event Image"/>
                 <div class="event-details">
                     <h3 th:text="${wydarzenie.Nazwa}"></h3>
-                    <p><strong>Start:</strong> <span th:text="${wydarzenie.Data_start}"></span></p>
-                    <p><strong>End:</strong> <span th:text="${wydarzenie.Data_koniec}"></span></p>
+                    <p><strong>Początek:</strong> <span th:text="${wydarzenie.Data_start}"></span></p>
+                    <p><strong>Koniec:</strong> <span th:text="${wydarzenie.Data_koniec}"></span></p>
                     <p><strong>Liczba miejsc:</strong> <span th:text="${wydarzenie.Liczba_miejsc}"></span></p>
                 </div>
                 <button class="btn btn-primary" data-toggle="modal" data-target="#eventModal"
@@ -120,8 +120,8 @@
             <div class="modal-body text-center">
                 <img id="modalEventImage" src="" alt="Event Image"/>
                 <h3 id="modalEventName"></h3>
-                <p><strong>Start:</strong> <span id="modalEventStart"></span></p>
-                <p><strong>End:</strong> <span id="modalEventEnd"></span></p>
+                <p><strong>Początek:</strong> <span id="modalEventStart"></span></p>
+                <p><strong>Koniec:</strong> <span id="modalEventEnd"></span></p>
             </div>
             <div class="modal-footer">
                 <form th:if="${#httpServletRequest.remoteUser != null}" method="post" th:action="@{/events/register}">

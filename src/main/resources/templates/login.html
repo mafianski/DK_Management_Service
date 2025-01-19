@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Login Page</title>
+    <title>Strona logowania</title>
 
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css}"/>
     <style>
@@ -23,7 +23,8 @@
         .login-container {
             background: #fff;
             border-radius: 8px;
-            padding: 30px;
+            padding: 40px;
+            width: 400px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             text-align: center;
         }
@@ -32,8 +33,26 @@
             margin-bottom: 15px;
         }
 
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            font-size: 16px;
+            padding: 10px;
+        }
+
         .register-link {
             margin-top: 15px;
+        }
+
+        .error-message {
+            color: red;
+            margin-bottom: 15px;
+        }
+
+        .error-message small {
+            color: red;
         }
     </style>
 </head>
@@ -45,27 +64,27 @@
 <!-- Content -->
 <div class="content">
     <div class="login-container">
-        <h2>Login</h2>
+        <h2>Logowanie</h2>
         <form method="post" th:action="@{/login}">
             <div class="form-group">
-                <label for="login">Login:</label>
-                <input id="login" type="text" placeholder="Enter login" autocomplete="off" class="form-control" name="username"/>
+                <label for="login">Nazwa użytkownika:</label>
+                <input id="login" type="text" placeholder="Wprowadź nazwę użytkownika" autocomplete="off" class="form-control" name="username" required/>
             </div>
 
             <div class="form-group">
-                <label for="password">Password:</label>
-                <input id="password" type="password" placeholder="Enter your password" autocomplete="off" class="form-control" name="password"/>
+                <label for="password">Hasło:</label>
+                <input id="password" type="password" placeholder="Wprowadź hasło" autocomplete="off" class="form-control" name="password" required/>
             </div>
 
             <div th:if="${param.error}" style="color:red; margin-bottom:15px">
-                ERROR: Invalid username or password!
+                ERROR: Niepoprawna nazwa użytkownika lub hasło!
             </div>
 
-            <button class="btn btn-primary btn-block" type="submit" value="Sign In">Login</button>
+            <button class="btn btn-primary btn-block" type="submit" value="Sign In">Zaloguj się</button>
         </form>
 
         <div class="register-link">
-            <p>Don't have an account? <a th:href="@{/register}">Register here</a></p>
+            <p>Nie masz konta? <a th:href="@{/register}">Zarejestruj się</a></p>
         </div>
     </div>
 </div>

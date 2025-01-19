@@ -14,32 +14,32 @@
                 <ul class="navbar-nav ml-auto align-items-center">
 
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/index}">Home</a>
+                        <a class="nav-link" th:href="@{/index}">Start</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/events}">Events</a>
+                        <a class="nav-link" th:href="@{/events}">Wydarzenia</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" th:href="${#httpServletRequest.remoteUser != null} ? '/main' : '/login'">Main
+                        <a class="nav-link" th:href="${#httpServletRequest.remoteUser != null} ? '/main' : '/login'">Konto
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
 
                     <li class="nav-item" th:if="${#request.remoteUser == null}">
-                        <a class="nav-link" th:href="@{/main}">Login</a>
+                        <a class="nav-link" th:href="@{/main}">Zaloguj się</a>
                     </li>
 
                     <!-- Nazwa zalogowanego użytkownika -->
                     <li class="nav-item" th:if="${#request.remoteUser != null}">
-                        <a class="nav-link" th:inline="text" style="color:lightskyblue;">You are logged in as <b
+                        <a class="nav-link" th:inline="text" style="color:lightskyblue;">Zalogowany jako: <b
                                 style="text-transform:capitalize">[[${#httpServletRequest.remoteUser}]]</b></a>
                     </li>
                     <!-- Przycisk Logout -->
                     <li class="nav-item" th:if="${#request.remoteUser != null}">
                         <form th:action="@{/index}" method="post" style="display:inline;">
-                            <button class="btn btn-danger btn-sm" type="submit" onclick="successfullyLogout()">Logout</button>
+                            <button class="btn btn-danger btn-sm" type="submit" onclick="successfullyLogout()">Wyloguj się</button>
                         </form>
                     </li>
 
