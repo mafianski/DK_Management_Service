@@ -15,9 +15,16 @@
         .form-container .col-sm-6 {
             width: 48%;
         }
+        /* Stylizacja przycisków w tabeli */
+        .action-buttons {
+            display: flex;
+            gap: 10px; /* Odstęp między przyciskami */
+        }
     </style>
 </head>
 <body>
+<div th:replace="fragments/header :: header"></div>
+
 <div class="container mt-5">
     <h1>Zarządzanie pracownikami</h1>
     <div th:if="${#lists.isEmpty(employees)}">
@@ -26,6 +33,9 @@
 
     <!-- Przycisk do przejścia do formularza dodawania pracownika -->
     <a href="/admin/employees/add" class="btn btn-success mb-4">Dodaj nowego pracownika</a>
+
+    <!-- Przycisk do przejścia do formularza dodawania stanowiska -->
+    <a href="/admin/employees/positions/add" class="btn btn-info mb-4">Zarządzanie stanowiskami</a>
 
     <h2 class="mt-5">Obecni pracownicy</h2>
     <table class="table table-bordered">
@@ -51,16 +61,34 @@
             <td th:text="${employee.pesel}"></td>
             <td th:text="${employee.plec}"></td>
             <td>
-                <form method="post" th:action="@{/admin/employees/delete}">
-                    <input type="hidden" name="id" th:value="${employee.nr_pracownika}"/>
-                    <button type="submit" class="btn btn-danger">Usuń</button>
-                </form>
+                <div class="action-buttons">
+                    <!-- Button to view employee details -->
+                    <a th:href="@{/admin/employees/details(id=${employee.nr_pracownika})}" class="btn btn-info">Szczegóły</a>
+
+                    <!-- Button to edit employee -->
+                    <a th:href="@{/admin/employees/edit(id=${employee.nr_pracownika})}" class="btn btn-primary">Edytuj</a>
+
+                    <!-- Form to confirm deletion -->
+                    <form method="post" th:action="@{/admin/employees/delete}" onsubmit="return confirmDelete();">
+                        <input type="hidden" name="id" th:value="${employee.nr_pracownika}"/>
+                        <button type="submit" class="btn btn-danger">Usuń</button>
+                    </form>
+                </div>
             </td>
         </tr>
         </tbody>
     </table>
 
-
+    <div class="mt-4">
+        <a href="/main_admin" class="btn btn-primary">Powrót do strony głównej</a>
+    </div>
 </div>
+
+<script>
+    // Funkcja wyświetlająca okno potwierdzenia usunięcia
+    function confirmDelete() {
+        return confirm("Czy na pewno chcesz usunąć tego pracownika?");
+    }
+</script>
 </body>
 </html>

@@ -43,7 +43,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/main_worker").access("hasAnyRole('WORKER', 'ADMIN')")
                 .antMatchers("/admin/**").access("hasRole('ADMIN')")
                 .antMatchers("/worker/**").access("hasAnyRole('WORKER', 'ADMIN')")
-                .antMatchers("/manage-events").access("hasAnyRole('WORKER', 'ADMIN')")
+                .antMatchers("/manage-events/**").access("hasAnyRole('WORKER', 'ADMIN')")
                 .antMatchers("/main_user").access("hasRole('USER')")
                 .and()
                 .formLogin()

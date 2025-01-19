@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Szczegóły pracownika</title>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css}"/>
+    <style>
+        .detail-label {
+            font-weight: bold;
+        }
+        .detail-value {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+        .detail-section {
+            margin-bottom: 20px;
+        }
+        .btn-back {
+            font-size: 1.1em;
+            margin-top: 20px;
+        }
+        .btn-edit {
+            font-size: 1.1em;
+            margin-top: 20px;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+
+<div class="container mt-5">
+    <h1 class="mb-4">Szczegóły pracownika</h1>
+
+    <div th:if="${employee != null}">
+        <!-- Imię -->
+        <div class="detail-section">
+            <span class="detail-label">Imię:</span>
+            <span class="detail-value" th:text="${employee.firstName}"></span>
+        </div>
+
+        <!-- Nazwisko -->
+        <div class="detail-section">
+            <span class="detail-label">Nazwisko:</span>
+            <span class="detail-value" th:text="${employee.lastName}"></span>
+        </div>
+
+        <!-- Data urodzenia -->
+        <div class="detail-section">
+            <span class="detail-label">Data urodzenia:</span>
+            <span class="detail-value" th:text="${employee.dob}"></span>
+        </div>
+
+        <!-- Telefon -->
+        <div class="detail-section">
+            <span class="detail-label">Telefon:</span>
+            <span class="detail-value" th:text="${employee.phoneNumber}"></span>
+        </div>
+
+        <!-- Email -->
+        <div class="detail-section">
+            <span class="detail-label">Email:</span>
+            <span class="detail-value" th:text="${employee.email}"></span>
+        </div>
+
+        <!-- Pesel -->
+        <div class="detail-section">
+            <span class="detail-label">Pesel:</span>
+            <span class="detail-value" th:text="${employee.pesel}"></span>
+        </div>
+
+        <!-- Płeć -->
+        <div class="detail-section">
+            <span class="detail-label">Płeć:</span>
+            <span class="detail-value" th:text="${employee.gender}"></span>
+        </div>
+
+        <!-- Stanowisko -->
+        <div class="detail-section">
+            <span class="detail-label">Stanowisko:</span>
+            <span class="detail-value" th:text="${positionName}"></span>
+        </div>
+
+        <!-- Adres -->
+        <div class="detail-section">
+            <span class="detail-label">Adres:</span>
+            <span class="detail-value" th:text="${employee.addressStreet} + ' ' + ${employee.addressBuildingNumber} + ', ' + ${employee.addressCity} + ', ' + ${employee.postalCode}"></span>
+        </div>
+
+        <!-- Numer mieszkania -->
+        <div class="detail-section">
+            <span class="detail-label">Numer mieszkania:</span>
+            <span class="detail-value" th:text="${employee.addressLocalNumber}"></span>
+        </div>
+
+        <!-- Nazwa poczty -->
+        <div class="detail-section">
+            <span class="detail-label">Nazwa poczty:</span>
+            <span class="detail-value" th:text="${employee.postName}"></span>
+        </div>
+
+        <!-- Przycisk powrotu -->
+        <div class="mt-4">
+            <a href="/admin/employees" class="btn btn-primary btn-back">Powrót do listy pracowników</a>
+
+            <!-- Przycisk edycji -->
+            <a th:href="@{/admin/employees/edit(id=${employee.id})}" class="btn btn-warning btn-edit">Edytuj pracownika</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

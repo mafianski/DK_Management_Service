@@ -21,30 +21,31 @@ public class EventController {
 
     @GetMapping("/events")
     public String showEventsPage(Model model) {
-        //TODO: podmienić z przykładowych
-        //WydarzenieDAO wydarzenieDAO = new WydarzenieDAO(jdbcTemplate);
-        //List<Wydarzenie> wydarzenia = wydarzenieDAO.list();
 
-        List<Wydarzenie> wydarzenia = List.of(
+
+        WydarzenieDAO wydarzenieDAO = new WydarzenieDAO(jdbcTemplate);
+        List<Wydarzenie> wydarzenia = wydarzenieDAO.list();
+
+        /*List<Wydarzenie> wydarzenia = List.of(
                 new Wydarzenie(1, "Koncert", 100, "01.02.2025", "01.02.2025", 2, 1),
                 new Wydarzenie(2, "Warsztaty", 200, "03.02.2025", "03.02.2025", 3, 1),
                 new Wydarzenie(3, "Wystawa", 50, "05.02.2025", "10.02.2025", 1, 1)
-        );
+        );*/
         model.addAttribute("wydarzenia", wydarzenia);
         return "events"; // Strona wyświetlania wydarzeń dla użytkowników
     }
 
     @GetMapping("/manage-events")
     public String manageEventsPage(Model model, HttpServletRequest request) {
-        //TODO: podmienić z przykładowych
-        //WydarzenieDAO wydarzenieDAO = new WydarzenieDAO(jdbcTemplate);
-        //List<Wydarzenie> wydarzenia = wydarzenieDAO.list();
 
-        List<Wydarzenie> wydarzenia = List.of(
+        WydarzenieDAO wydarzenieDAO = new WydarzenieDAO(jdbcTemplate);
+        List<Wydarzenie> wydarzenia = wydarzenieDAO.list();
+
+        /*List<Wydarzenie> wydarzenia = List.of(
                 new Wydarzenie(1, "Koncert", 100, "01.02.2025", "01.02.2025", 2, 1),
                 new Wydarzenie(2, "Warsztaty", 200, "03.02.2025", "03.02.2025", 3, 1),
                 new Wydarzenie(3, "Wystawa", 50, "05.02.2025", "10.02.2025", 1, 1)
-        );
+        );*/
 
         boolean isAdmin = request.isUserInRole("ADMIN");
         model.addAttribute("wydarzenia", wydarzenia);
@@ -54,10 +55,13 @@ public class EventController {
 
     @PostMapping("/manage-events/delete")
     public String deleteEvent(@RequestParam("eventId") int eventId, HttpServletRequest request) {
+
         if (!request.isUserInRole("ADMIN")) {
             return "redirect:/manage-events?error=unauthorized";
         }
-        // TODO: Usuń wydarzenie z bazy danych za pomocą DAO
+
+        WydarzenieDAO wydarzenieDAO = new WydarzenieDAO(jdbcTemplate);
+        wydarzenieDAO.delete(eventId);
         return "redirect:/manage-events?success";
     }
 

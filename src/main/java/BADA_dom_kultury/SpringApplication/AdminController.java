@@ -58,7 +58,6 @@ public class AdminController {
         model.addAttribute("employeeDTO", employeeDTO);
         List<Stanowiska> stanowiska = stanowiskaDAO.list();
         model.addAttribute("stanowiska", stanowiska);
-
         return "admin/add-employee";
     }
 
@@ -82,10 +81,7 @@ public class AdminController {
         System.out.println("Lokal:" + employeeDTO.getAddressLocalNumber());
 
         // Dodawanie pracownika do bazy danych
-        addEmployeeToDatabase(employeeDTO);
-
-
-
+        employeeDTO.addEmployeeToDatabase(employeeDTO, jdbcTemplate);
 
         return "redirect:/admin/employees";
     }
@@ -96,93 +92,69 @@ public class AdminController {
         return "redirect:/admin/employees";
     }
 
-    public void addEmployeeToDatabase(EmployeeDTO employeeDTO) {
-        PocztyDAO pocztyDAO = new PocztyDAO(jdbcTemplate);
-        Poczty poczty = new Poczty();
-        AdresyDAO adresyDAO = new AdresyDAO(jdbcTemplate);
-        Adresy adresy = new Adresy();
-        StanowiskaDAO stanowiskaDAO = new StanowiskaDAO(jdbcTemplate);
-        Stanowiska stanowiska = new Stanowiska();
+    @GetMapping("/edit")
+    public String showEditEmployeeForm(@RequestParam int id, Model model) {
+        EmployeeDTO employeeToEdit;
+        employeeToEdit = EmployeeDTO.getEmployeeFromDatabase(id, jdbcTemplate);
+        employeeToEdit.setId(id);
+        model.addAttribute("employee", employeeToEdit);
 
-        List<Poczty> pocztyList = pocztyDAO.list();
-        System.out.println("Poczty: " + pocztyList);
-        int idPoczty = 0;
+        List<Stanowiska> stanowiska = stanowiskaDAO.list();
+        model.addAttribute("stanowiska", stanowiska);
 
-        for (Poczty p : pocztyList) {
-            if (p.getPoczta().equals(employeeDTO.getPostName()) && p.getKod_pocztowy().equals(employeeDTO.getPostalCode())) {
-                idPoczty = p.getNr_poczty();
-                break;
-            }
-        }
-
-        if (idPoczty == 0) {
-            poczty.setPoczta(employeeDTO.getPostName());
-            poczty.setKod_pocztowy(employeeDTO.getPostalCode());
-            pocztyDAO.save(poczty);
-            pocztyList = pocztyDAO.list();
-            for (Poczty p : pocztyList) {
-                if (p.getPoczta().equals(employeeDTO.getPostName()) && p.getKod_pocztowy().equals(employeeDTO.getPostalCode())) {
-                    idPoczty = p.getNr_poczty();
-                    break;
-                }
-            }
-        }
-        System.out.println("idPoczty: " + idPoczty);
-
-        List<Adresy> adresyList = adresyDAO.list();
-        System.out.println("Adresy: " + adresyList);
-        int idAdresu = 0;
-        for (Adresy a : adresyList) {
-            if (a.getMiasto().equals(employeeDTO.getAddressCity()) && a.getUlica().equals(employeeDTO.getAddressStreet())
-                    && a.getNr_budynku().equals(employeeDTO.getAddressBuildingNumber())
-                    && a.getNr_lokalu().equals(employeeDTO.getAddressLocalNumber())
-                    && a.getNr_poczty() == idPoczty) {
-                idAdresu = a.getNr_adresu();
-                break;
-            }
-        }
-
-        if (idAdresu == 0){
-            adresy.setMiasto(employeeDTO.getAddressCity());
-            adresy.setUlica(employeeDTO.getAddressStreet());
-            adresy.setNr_budynku(employeeDTO.getAddressBuildingNumber());
-            adresy.setNr_lokalu(employeeDTO.getAddressLocalNumber());
-            adresy.setNr_poczty(idPoczty);
-            adresyDAO.save(adresy);
-            adresyList = adresyDAO.list();
-            for (Adresy a : adresyList) {
-                if (a.getMiasto().equals(employeeDTO.getAddressCity()) && a.getUlica().equals(employeeDTO.getAddressStreet())
-                        && a.getNr_budynku().equals(employeeDTO.getAddressBuildingNumber())
-                        && a.getNr_lokalu().equals(employeeDTO.getAddressLocalNumber())
-                        && a.getNr_poczty() == idPoczty) {
-                    idAdresu = a.getNr_adresu();
-                    break;
-                }
-            }
-        }
-        System.out.println("idAdresu: " + idAdresu);
-
-        List<Stanowiska> stanowiskaList = stanowiskaDAO.list();
-        System.out.println("Stanowiska: " + stanowiskaList);
-        int idStanowiska = Integer.parseInt(employeeDTO.getPositionName());
-        System.out.println("idStanowiska: " + idStanowiska);
-
-        Pracownicy pracownik = new Pracownicy();
-        pracownik.setImie(employeeDTO.getFirstName());
-        pracownik.setNazwisko(employeeDTO.getLastName());
-        pracownik.setData_urodzenia(employeeDTO.getDob());
-        pracownik.setTelefon(employeeDTO.getPhoneNumber());
-        pracownik.setEmail(employeeDTO.getEmail());
-        pracownik.setPesel(employeeDTO.getPesel());
-        pracownik.setPlec(employeeDTO.getGender());
-        //Bo taki się dodał klucz główny domu kultury w sqldeveloper więc będzie hardcodowany na 3
-        pracownik.setNr_domu_kultury(3);
-        pracownik.setNr_adresu(idAdresu);
-        pracownik.setNr_stanowiska(idStanowiska);
-
-        pracownicyDAO.save(pracownik);
-
-
+        return "admin/edit-employee";
     }
 
+    @PostMapping("/edit")
+    public String editEmployee(@ModelAttribute EmployeeDTO employeeDTO) {
+        employeeDTO.updateEmployeeInDatabase(employeeDTO, jdbcTemplate);
+        return "redirect:/admin/employees";
+    }
+
+    @GetMapping("/details")
+    public String showEmployeeDetails(@RequestParam int id, Model model) {
+        EmployeeDTO employeeDetails;
+        employeeDetails = EmployeeDTO.getEmployeeFromDatabase(id, jdbcTemplate);
+        employeeDetails.setId(id);
+        int nr_stanowiska = Integer.parseInt(employeeDetails.getPositionName());
+        System.out.println("NR STANOWISKA Z EMPLOYYE NAME: " + nr_stanowiska);
+        String positionName = stanowiskaDAO.get(nr_stanowiska).getNazwa();
+        System.out.println("POSITION NAME: " + positionName);
+
+        model.addAttribute("employee", employeeDetails);
+        model.addAttribute("positionName", positionName);
+        return "admin/employee-details";
+    }
+
+    @GetMapping("/positions/add")
+    public String showAddPositionForm(Model model) {
+        List<Stanowiska> stanowiska = stanowiskaDAO.list();
+        model.addAttribute("stanowiska", stanowiska);
+        model.addAttribute("stanowisko", new Stanowiska());
+        return "admin/add-position";
+    }
+
+    @PostMapping("/positions/add")
+    public String addPosition(@ModelAttribute Stanowiska stanowisko) {
+        System.out.println("Nazwa stanowiska: " + stanowisko.getNazwa());
+        System.out.println("Opis stanowiska: " + stanowisko.getOpis());
+
+        stanowiskaDAO.save(stanowisko);
+        return "redirect:/admin/employees/positions/add";
+    }
+
+    @PostMapping("/positions/delete")
+    public String deletePosition(@RequestParam int id, Model model) {
+        boolean isPositionAssigned = pracownicyDAO.isPositionAssigned(id);
+        List<Stanowiska> stanowiska = stanowiskaDAO.list();
+        if (isPositionAssigned) {
+            model.addAttribute("stanowiska", stanowiska);
+            model.addAttribute("error", "Nie można usunąć stanowiska, " +
+                    "do którego jest przypisany pracownik. Najpierw pozmieniaj stanowiska odpowiednich pracowników.");
+            return "admin/add-position";
+        }
+
+        stanowiskaDAO.delete(id);
+        return "redirect:/admin/employees/positions/add";
+    }
 }

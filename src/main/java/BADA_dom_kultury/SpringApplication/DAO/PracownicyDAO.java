@@ -148,4 +148,10 @@ public class PracownicyDAO {
         String sql = "DELETE FROM PRACOWNICY WHERE nr_pracownika = ?";
         jdbcTemplate.update(sql, nr_pracownika);
     }
+
+    public boolean isPositionAssigned(int nr_stanowiska) {
+        String sql = "SELECT COUNT(*) FROM PRACOWNICY WHERE nr_stanowiska = ?";
+        Integer count = jdbcTemplate.queryForObject(sql, new Object[]{nr_stanowiska}, Integer.class);
+        return count != null && count > 0;
+    }
 }

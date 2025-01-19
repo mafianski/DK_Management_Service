@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Dodaj nowe stanowisko</title>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css}"/>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+
+<div class="container mt-5">
+    <h1>Dodaj nowe stanowisko</h1>
+
+    <!-- Formularz dodawania nowego stanowiska -->
+    <form method="post" th:action="@{/admin/employees/positions/add}">
+        <div class="form-group">
+            <label for="nazwa">Nazwa stanowiska</label>
+            <input type="text" id="nazwa" name="nazwa" class="form-control" required/>
+        </div>
+
+        <div class="form-group">
+            <label for="opis">Opis stanowiska</label>
+            <textarea id="opis" name="opis" class="form-control" rows="4" required></textarea>
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-success">Zapisz stanowisko</button>
+            <a href="/admin/employees" class="btn btn-primary">Powrót do listy pracowników</a>
+        </div>
+    </form>
+
+    <!-- Lista obecnych stanowisk -->
+    <h2 class="mt-5">Obecne stanowiska</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Nazwa stanowiska</th>
+            <th>Opis</th>
+            <th>Akcja</th> <!-- Nowa kolumna dla przycisku usuwania -->
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="stanowisko : ${stanowiska}">
+            <td th:text="${stanowisko.nazwa}">Nazwa stanowiska</td>
+            <td th:text="${stanowisko.opis}">Opis stanowiska</td>
+            <td>
+                <!-- Formularz do usuwania stanowiska -->
+                <form method="post" th:action="@{/admin/employees/positions/delete}">
+                    <input type="hidden" name="id" th:value="${stanowisko.nr_stanowiska}"/>
+                    <button type="submit" class="btn btn-danger">Usuń</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Modal dla błędów -->
+<div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true" th:if="${error}">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="errorModalLabel">Błąd</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Zamknij">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p th:text="${error}"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        // Wyświetlanie modala, jeśli istnieje błąd
+        if ($('#errorModal').length) {
+            $('#errorModal').modal('show');
+        }
+    });
+</script>
+
+</body>
+</html>

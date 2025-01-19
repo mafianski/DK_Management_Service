@@ -26,7 +26,6 @@
             padding: 40px;
             width: 400px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
         }
 
         .login-container form {
@@ -35,11 +34,30 @@
 
         .form-group {
             margin-bottom: 20px;
+            position: relative; /* Aby umożliwić pozycjonowanie ikonki */
         }
 
         .form-control {
             font-size: 16px;
             padding: 10px;
+        }
+
+        .eye-icon {
+            position: absolute;
+            bottom: 5%;
+            right: 10px;
+            transform: translateY(-50%); /* Wyrównanie do środka */
+            cursor: pointer;
+            width: 20px;
+            height: 20px;
+            pointer-events: auto; /* Aby można było kliknąć na ikonkę */
+        }
+
+
+        label {
+            text-align: left;
+            display: block;
+            margin-bottom: 5px;
         }
 
         .register-link {
@@ -74,6 +92,8 @@
             <div class="form-group">
                 <label for="password">Hasło:</label>
                 <input id="password" type="password" placeholder="Wprowadź hasło" autocomplete="off" class="form-control" name="password" required/>
+                <!-- Ikonka oka -->
+                <img th:src="@{/images/eye-closed-icon.png}" alt="Pokaż hasło" class="eye-icon" onclick="togglePasswordVisibility()" id="togglePassword"/>
             </div>
 
             <div th:if="${param.error}" style="color:red; margin-bottom:15px">
@@ -88,6 +108,20 @@
         </div>
     </div>
 </div>
+
+<script>
+    function togglePasswordVisibility() {
+        const passwordField = document.getElementById("password");
+        const toggleIcon = document.getElementById("togglePassword");
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+            toggleIcon.src = "images/eye-icon.png"; // Zmiana na ikonę zamkniętego oka
+        } else {
+            passwordField.type = "password";
+            toggleIcon.src = "images/eye-closed-icon.png"; // Zmiana na ikonę otwartego oka
+        }
+    }
+</script>
 
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
