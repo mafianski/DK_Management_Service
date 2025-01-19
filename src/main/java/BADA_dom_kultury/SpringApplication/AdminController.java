@@ -118,7 +118,7 @@ public class AdminController {
         employeeDetails = EmployeeDTO.getEmployeeFromDatabase(id, jdbcTemplate);
         employeeDetails.setId(id);
         int nr_stanowiska = Integer.parseInt(employeeDetails.getPositionName());
-        System.out.println("NR STANOWISKA Z EMPLOYYE NAME: " + nr_stanowiska);
+        System.out.println("NR STANOWISKA Z EMPLOYEE NAME: " + nr_stanowiska);
         String positionName = stanowiskaDAO.get(nr_stanowiska).getNazwa();
         System.out.println("POSITION NAME: " + positionName);
 

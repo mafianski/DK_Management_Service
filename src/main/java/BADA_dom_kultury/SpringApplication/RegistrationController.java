@@ -78,12 +78,6 @@ public class RegistrationController {
             e.printStackTrace();
         }
 
-
-        //dodawanie zarejestrowanego użytkownika do bazy danych
-        //Zosatawiam zakomentowane żeby ci błędów nie wywalało
-
-
-
         return "redirect:/login";  // Przekierowanie po rejestracji
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpSession;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -17,6 +18,8 @@ public class LoginController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private HttpSession session;
 
     @GetMapping("/login")
     public String showLoginForm() {
@@ -42,6 +45,7 @@ public class LoginController {
                     // Porównujemy hasło
                     if (passwordEncoder.encode(password).equals(storedHashedPassword)) {
                         // Użytkownik zalogowany pomyślnie
+                        session.setAttribute("userId", uczestnikId);
                         model.addAttribute("username", username);
                         model.addAttribute("role", role);
                         return "main_user";  // Przekierowanie do strony powitalnej

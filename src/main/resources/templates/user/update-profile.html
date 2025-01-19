@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Aktualizacja profilu</title>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css}"/>
+    <style>
+        .update-container {
+            margin-top: 50px;
+        }
+
+        .form-group label {
+            font-weight: bold;
+        }
+
+        .password-section {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+
+<div th:replace="fragments/header :: header"></div>
+
+<div class="container update-container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2 class="text-center">Aktualizacja profilu</h2>
+            <form method="post" th:action="@{/update-profile}">
+                <!-- Login (readonly, nie można edytować) -->
+                <div class="form-group">
+                    <label for="username">Nazwa użytkownika:</label>
+                    <input id="username" type="text" class="form-control" name="username" th:value="${username}" readonly/>
+                </div>
+
+                <!-- Imię -->
+                <div class="form-group">
+                    <label for="firstName">Imię:</label>
+                    <input id="firstName" type="text" class="form-control" name="firstName" th:value="${userDTO.firstName}" required maxlength="20"/>
+                </div>
+
+                <!-- Nazwisko -->
+                <div class="form-group">
+                    <label for="lastName">Nazwisko:</label>
+                    <input id="lastName" type="text" class="form-control" name="lastName" th:value="${userDTO.lastName}" required maxlength="20"/>
+                </div>
+
+                <!-- Data Urodzenia -->
+                <div class="form-group">
+                    <label for="dob">Data urodzenia:</label>
+                    <input id="dob" type="date" class="form-control" name="dob" th:value="${userDTO.dob}" required/>
+                </div>
+
+                <!-- Numer Telefonu -->
+                <div class="form-group">
+                    <label for="phoneNumber">Numer telefonu (niewymagany):</label>
+                    <input id="phoneNumber" type="text" class="form-control" name="phoneNumber" th:value="${userDTO.phoneNumber}" maxlength="15" pattern="^\d{1,15}$"/>
+                </div>
+
+                <!-- E-mail -->
+                <div class="form-group">
+                    <label for="email">Adres email (niewymagany):</label>
+                    <input id="email" type="email" class="form-control" name="email" th:value="${userDTO.email}" maxlength="40"/>
+                </div>
+
+                <!-- Przyciski -->
+                <div class="form-group text-center">
+                    <button type="submit" class="btn btn-primary btn-block">Zapisz zmiany</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+</body>
+</html>
