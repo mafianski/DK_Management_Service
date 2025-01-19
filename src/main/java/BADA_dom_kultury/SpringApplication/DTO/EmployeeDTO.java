@@ -10,7 +10,11 @@ import BADA_dom_kultury.SpringApplication.Tables.Pracownicy;
 import BADA_dom_kultury.SpringApplication.Tables.Stanowiska;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 
 public class EmployeeDTO {
@@ -292,8 +296,30 @@ public class EmployeeDTO {
         pracownik.setNr_domu_kultury(3);
         pracownik.setNr_adresu(idAdresu);
         pracownik.setNr_stanowiska(idStanowiska);
-
         pracownicyDAO.save(pracownik);
+
+
+        id = 0;
+        List<Pracownicy> pracownicy = pracownicyDAO.list();
+        for (Pracownicy pracownik1 : pracownicy) {
+            if (pracownik1.equals(pracownik)) {
+                id = pracownik1.getNr_pracownika();
+            }
+        }
+
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String rawPassword = employeeDTO.getPassword();  // Możesz zmienić, aby umożliwić użytkownikowi ustawienie hasła
+        String hashedPassword = encoder.encode(rawPassword);
+
+        // Możesz zapisać dane do pliku CSV
+        try (FileWriter writer = new FileWriter("users.csv", true);
+             BufferedWriter bw = new BufferedWriter(writer)) {
+            bw.write(id + "," + employeeDTO.getUsername() + "," + hashedPassword + "," + "WORKER");
+            bw.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public static EmployeeDTO getEmployeeFromDatabase(int id, JdbcTemplate jdbcTemplate) {

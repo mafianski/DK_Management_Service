@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 public class RegistrationController {
@@ -37,7 +38,29 @@ public class RegistrationController {
         // Hashowanie hasła
         String hashedPassword = passwordEncoder.encode(userDTO.getPassword());
 
+        String rola = "USER";
+        Uczestnicy uczestnik = new Uczestnicy();
+        uczestnik.setImie(userDTO.getFirstName());
+        uczestnik.setNazwisko(userDTO.getLastName());
+        uczestnik.setData_urodzenia(userDTO.getDob());
+        uczestnik.setTelefon(userDTO.getPhoneNumber());
+        uczestnik.setEmail(userDTO.getEmail());
+        uczestnik.setNr_domu_kultury(3);
+
+
+        UczestnicyDAO uczetnikDAO = new UczestnicyDAO(jdbcTemplate);
+        uczetnikDAO.save(uczestnik);
+
+        int id = 0;
+        List<Uczestnicy> uczestnicy = uczetnikDAO.list();
+        for (Uczestnicy uczestnik1 : uczestnicy) {
+            if (uczestnik1.equals(uczestnik)) {
+                id = uczestnik1.getNr_uczestnika();
+            }
+        }
+
         // Przykład wyświetlenia danych w logach
+        System.out.println("nr_uczestnika: " + id);
         System.out.println("Imię: " + userDTO.getFirstName());
         System.out.println("Nazwisko: " + userDTO.getLastName());
         System.out.println("Data urodzenia: " + userDTO.getDob());
@@ -49,9 +72,7 @@ public class RegistrationController {
         // Możesz zapisać dane do pliku CSV
         try (FileWriter writer = new FileWriter("users.csv", true);
              BufferedWriter bw = new BufferedWriter(writer)) {
-            bw.write(userDTO.getFirstName() + "," + userDTO.getLastName() + "," +
-                    userDTO.getDob() + "," + userDTO.getPhoneNumber() + "," +
-                    userDTO.getEmail() + "," + userDTO.getUsername() + "," + hashedPassword);
+            bw.write(id + "," + userDTO.getUsername() + "," + hashedPassword + "," + rola);
             bw.newLine();
         } catch (IOException e) {
             e.printStackTrace();
@@ -60,18 +81,6 @@ public class RegistrationController {
 
         //dodawanie zarejestrowanego użytkownika do bazy danych
         //Zosatawiam zakomentowane żeby ci błędów nie wywalało
-        //todo odkomentować
-        /*
-        Uczestnicy uczestnik = new Uczestnicy();
-        uczestnik.setImie(userDTO.getFirstName());
-        uczestnik.setNazwisko(userDTO.getLastName());
-        uczestnik.setData_urodzenia(userDTO.getDob());
-        uczestnik.setTelefon(userDTO.getPhoneNumber());
-        uczestnik.setEmail(userDTO.getEmail());
-        uczestnik.setNr_domu_kultury(3);
-        UczestnicyDAO uczetnikDAO = new UczestnicyDAO(jdbcTemplate);
-        uczetnikDAO.save(uczestnik);
-        */
 
 
 

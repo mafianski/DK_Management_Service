@@ -144,11 +144,11 @@ public class Pracownicy {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Pracownicy that = (Pracownicy) o;
-        return nr_pracownika == that.nr_pracownika && plec == that.plec && nr_domu_kultury == that.nr_domu_kultury && nr_adresu == that.nr_adresu && nr_stanowiska == that.nr_stanowiska && Objects.equals(imie, that.imie) && Objects.equals(nazwisko, that.nazwisko) && Objects.equals(data_urodzenia, that.data_urodzenia) && Objects.equals(email, that.email) && Objects.equals(telefon, that.telefon) && Objects.equals(pesel, that.pesel);
+        return nr_domu_kultury == that.nr_domu_kultury && nr_adresu == that.nr_adresu && nr_stanowiska == that.nr_stanowiska && Objects.equals(imie, that.imie) && Objects.equals(nazwisko, that.nazwisko) && Objects.equals(data_urodzenia, that.data_urodzenia) && Objects.equals(email, that.email) && Objects.equals(telefon, that.telefon) && Objects.equals(pesel, that.pesel) && Objects.equals(plec, that.plec);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(nr_pracownika, imie, nazwisko, data_urodzenia, email, telefon, pesel, plec, nr_domu_kultury, nr_adresu, nr_stanowiska);
+        return Objects.hash(imie, nazwisko, data_urodzenia, email, telefon, pesel, plec, nr_domu_kultury, nr_adresu, nr_stanowiska);
     }
 }

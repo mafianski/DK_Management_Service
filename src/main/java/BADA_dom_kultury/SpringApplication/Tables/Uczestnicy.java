@@ -100,11 +100,11 @@ public class Uczestnicy {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Uczestnicy that = (Uczestnicy) o;
-        return nr_uczestnika == that.nr_uczestnika && nr_domu_kultury == that.nr_domu_kultury && Objects.equals(imie, that.imie) && Objects.equals(nazwisko, that.nazwisko) && Objects.equals(data_urodzenia, that.data_urodzenia) && Objects.equals(telefon, that.telefon) && Objects.equals(email, that.email);
+        return nr_domu_kultury == that.nr_domu_kultury && Objects.equals(imie, that.imie) && Objects.equals(nazwisko, that.nazwisko) && Objects.equals(data_urodzenia, that.data_urodzenia) && Objects.equals(telefon, that.telefon) && Objects.equals(email, that.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(nr_uczestnika, imie, nazwisko, data_urodzenia, telefon, email, nr_domu_kultury);
+        return Objects.hash(imie, nazwisko, data_urodzenia, telefon, email, nr_domu_kultury);
     }
 }

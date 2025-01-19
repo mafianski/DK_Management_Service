@@ -12,7 +12,21 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+
+    private final CsvUserDetailsService userDetailsService;
+
+    public SecurityConfiguration(CsvUserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
+
     @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+
+        auth.userDetailsService(userDetailsService).passwordEncoder(getPasswordEncoder());
+
+    }
+
+    /*@Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
                 .withUser("user")
@@ -26,7 +40,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .withUser("worker") // Przykładowe konto pracownika
                 .password(getPasswordEncoder().encode("worker"))
                 .roles("WORKER");
-    }
+    }*/
 
     @Bean
     public PasswordEncoder getPasswordEncoder() {

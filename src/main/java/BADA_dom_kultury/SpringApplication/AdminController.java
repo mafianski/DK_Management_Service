@@ -80,6 +80,7 @@ public class AdminController {
         System.out.println("Ulica:" + employeeDTO.getAddressStreet());
         System.out.println("Lokal:" + employeeDTO.getAddressLocalNumber());
 
+
         // Dodawanie pracownika do bazy danych
         employeeDTO.addEmployeeToDatabase(employeeDTO, jdbcTemplate);
 
