@@ -5,6 +5,10 @@
     <title>Wydarzenia</title>
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css}"/>
     <style>
+        body {
+            background-color: #f1f1f1;
+            margin: 0;
+        }
         .event-card {
             border: 1px solid #ddd;
             border-radius: 10px;
@@ -14,15 +18,15 @@
             flex-direction: column;
             justify-content: space-between;
             height: 100%;
-            margin-bottom: 15px; /* Przerwa poniżej karty */
+            margin-bottom: 15px;
         }
 
         .event-card img {
             max-width: 100%;
             height: auto;
-            max-height: 200px; /* Ustawienie maksymalnej wysokości obrazka */
+            max-height: 200px;
             border-radius: 10px;
-            object-fit: cover; /* Utrzymuje proporcje obrazka */
+            object-fit: cover;
         }
 
         .event-card .event-details {

@@ -2,35 +2,85 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Main User Page</title>
+    <title>Konto</title>
 
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
 
+    <style>
+        .main-user-section {
+            margin-top: 30px;
+        }
+
+        .main-user-section h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .btn-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .btn-small {
+            width: 200px;
+            padding: 8px 10px;
+            text-align: center;
+        }
+
+        .intro-section {
+            background-color: #f8f9fa;
+            padding: 40px;
+            text-align: center;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .intro-section h2 {
+            font-size: 36px;
+            color: #2c3e50;
+        }
+
+        .intro-section p {
+            font-size: 18px;
+            color: #34495e;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
 
 <div th:replace="fragments/header :: header"></div>
 
 <div class="container">
+    <!-- Introduction Section about Dom Kultury -->
     <div class="row">
-
-        <div class="col-md-10 mt-5">
-            <form method="post" th:action="@{/index}">
-                <div class="form-group">
-                    <label style="font-size:30px" th:inline="text">Welcome <a
-                            style="color:lightskyblue; text-transform:capitalize"><b>[[${#httpServletRequest.remoteUser}]]</b></a>
-                        to the main page!</label>
-                    <div style="font-size:20px">If you want to logout, click "Logout" button under this text.</div>
-                </div>
-
-                <button class="btn btn-primary" type="submit" onclick="successfullyLogout()" value="Sign Out">Logout
-                </button>
-            </form>
+        <div class="col-md-12 intro-section">
+            <label style="font-size:30px" th:inline="text">Witaj na stronie naszego Domu Kultury, <a
+                    style="color:lightskyblue; text-transform:capitalize"><b>[[${#httpServletRequest.remoteUser}]]</b></a>!</label>
+            <p>
+                Dom Kultury to przestrzeń pełna pasji, twórczości i inspiracji. Jesteśmy miejscem, które łączy ludzi
+                z różnych środowisk, oferując szeroki wachlarz zajęć kulturalnych. Od warsztatów artystycznych po
+                wydarzenia muzyczne – u nas zawsze znajdziesz coś dla siebie!
+            </p>
+            <p>
+                Ciesz się z uczestnictwa w naszych wydarzeniach, twórz, rozwijaj swoje pasje i spotykaj się z
+                inspirującymi ludźmi. Witamy Cię w świecie kultury, w którym każdy ma swoje miejsce!
+            </p>
         </div>
+    </div>
 
+    <div class="row main-user-section">
+        <div class="col-md-12">
+            <h3>Zarządzanie kontem</h3>
+            <div class="btn-container">
+                <a th:href="@{/update-profile}" class="btn btn-secondary btn-small">Zmień dane użytkownika</a>
+                <a th:href="@{/attend-events}" class="btn btn-secondary btn-small">Wyświetl listę zapisów</a>
+            </div>
+        </div>
     </div>
 </div>
-
 
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
