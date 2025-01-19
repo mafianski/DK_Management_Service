@@ -5,7 +5,22 @@
     <title>Main Admin Page</title>
 
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+    <style>
+        .admin-section {
+            margin-top: 30px;
+        }
 
+        .admin-section h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+    </style>
 </head>
 <body>
 
@@ -13,13 +28,16 @@
 
 <div class="container">
     <div class="row">
-
         <div class="col-md-10 mt-5">
             <form method="post" th:action="@{/index}">
                 <div class="form-group">
-                    <label style="font-size:30px" th:inline="text">Welcome <a
-                            style="color:lightskyblue; text-transform:capitalize"><b>[[${#httpServletRequest.remoteUser}]]</b></a>
-                        to the main page!</label>
+                    <label style="font-size:30px" th:inline="text">
+                        Welcome
+                        <a style="color:lightskyblue; text-transform:capitalize">
+                            <b>[[${#httpServletRequest.remoteUser}]]</b>
+                        </a>
+                        to the main page!
+                    </label>
                     <div style="font-size:20px">If you want to logout, click "Logout" button under this text.</div>
                 </div>
 
@@ -27,10 +45,19 @@
                 </button>
             </form>
         </div>
+    </div>
 
+    <!-- Nowa sekcja dla zarządzania -->
+    <div class="row admin-section">
+        <div class="col-md-12">
+            <h3>Admin Tools</h3>
+            <div class="btn-group">
+                <!-- Przycisk do zarządzania pracownikami -->
+                <a th:href="@{/admin/employees}" class="btn btn-secondary">Manage Employees</a>
+            </div>
+        </div>
     </div>
 </div>
-
 
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>

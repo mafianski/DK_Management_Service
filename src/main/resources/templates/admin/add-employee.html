@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add New Employee</title>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css}"/>
+    <style>
+        .form-group label {
+            font-weight: bold;
+        }
+
+        .form-group label.required::after {
+            content: "*";
+            color: red;
+        }
+
+        .form-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .form-container .col-sm-6 {
+            width: 48%;
+        }
+
+        .invalid-feedback {
+            display: none;
+            color: red;
+        }
+
+        .form-control.is-invalid {
+            border-color: red;
+        }
+
+        .form-group .form-control:focus {
+            border-color: #007bff;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-5">
+    <h1>Add New Employee</h1>
+
+    <form method="post" th:action="@{/admin/employees/add}" id="employeeForm">
+        <div class="form-container">
+            <!-- Pierwsza kolumna: Dane osobowe -->
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="required" for="firstName">First Name:</label>
+                    <input type="text" id="firstName" name="firstName" class="form-control" maxlength="20" required/>
+                    <div class="invalid-feedback">First name is required and should not exceed 20 characters.</div>
+                </div>
+                <div class="form-group">
+                    <label class="required" for="lastName">Last Name:</label>
+                    <input type="text" id="lastName" name="lastName" class="form-control" maxlength="20" required/>
+                    <div class="invalid-feedback">Last name is required and should not exceed 20 characters.</div>
+                </div>
+                <div class="form-group">
+                    <label class="required" for="dob">Date of Birth:</label>
+                    <input type="date" id="dob" name="dob" class="form-control" required/>
+                    <div class="invalid-feedback">Date of birth is required.</div>
+                </div>
+                <div class="form-group">
+                    <label class="required" for="phoneNumber">Phone Number:</label>
+                    <input type="text" id="phoneNumber" name="phoneNumber" class="form-control" required/>
+                    <div class="invalid-feedback">Phone number is required.</div>
+                </div>
+                <div class="form-group">
+                    <label class="required" for="email">Email:</label>
+                    <input type="email" id="email" name="email" class="form-control" required/>
+                    <div class="invalid-feedback">Email is required.</div>
+                </div>
+                <div class="form-group">
+                    <label for="pesel">PESEL:</label>
+                    <input type="text" id="pesel" name="pesel" class="form-control"/>
+                </div>
+                <div class="form-group">
+                    <label class="required" for="gender">Gender:</label>
+                    <select id="gender" name="gender" class="form-control" required>
+                        <option value="M">Male</option>
+                        <option value="K">Female</option>
+                    </select>
+                </div>
+                <!-- Zaktualizowane pole dla stanowiska -->
+                <div class="form-group">
+                    <label class="required" for="positionName">Position Name:</label>
+                    <select id="positionName" name="positionName" class="form-control" required>
+                        <option value="" disabled selected>Select Position</option>
+                        <!-- Pętla dla stanowisk -->
+                        <option th:each="stanowisko : ${stanowiska}"
+                                th:value="${stanowisko.nr_stanowiska}"
+                                th:text="${stanowisko.nazwa}"></option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Druga kolumna: Dane adresowe i zawodowe -->
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="required" for="addressCity">City:</label>
+                    <input type="text" id="addressCity" name="addressCity" class="form-control" required/>
+                    <div class="invalid-feedback">City is required.</div>
+                </div>
+                <div class="form-group">
+                    <label class="required" for="addressStreet">Street:</label>
+                    <input type="text" id="addressStreet" name="addressStreet" class="form-control" required/>
+                    <div class="invalid-feedback">Street is required.</div>
+                </div>
+                <div class="form-group">
+                    <label class="required" for="addressBuildingNumber">Building Number:</label>
+                    <input type="text" id="addressBuildingNumber" name="addressBuildingNumber" class="form-control" required/>
+                    <div class="invalid-feedback">Building number is required.</div>
+                </div>
+                <div class="form-group">
+                    <label for="addressLocalNumber">Address Local Number:</label>
+                    <input type="text" id="addressLocalNumber" name="addressLocalNumber" class="form-control"/>
+                </div>
+                <div class="form-group">
+                    <label class="required" for="postName">Post Name:</label>
+                    <input type="text" id="postName" name="postName" class="form-control" required/>
+                    <div class="invalid-feedback">Post name is required.</div>
+                </div>
+                <div class="form-group">
+                    <label class="required" for="postalCode">Postal Code:</label>
+                    <input type="text" id="postalCode" name="postalCode" class="form-control" required
+                           pattern="^\d{2}-\d{3}$" title="Postal code must be in the format XX-XXX, where X is a digit."/>
+                    <div class="invalid-feedback">Postal code is required and must be in the format XX-XXX (e.g., 12-345).</div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="required" for="username">Username:</label>
+                    <input type="text" id="username" name="username" class="form-control" required/>
+                    <div class="invalid-feedback">Username is required.</div>
+                </div>
+                <div class="form-group">
+                    <label class="required" for="password">Password:</label>
+                    <input type="password" id="password" name="password" class="form-control" required/>
+                    <div class="invalid-feedback">Password is required.</div>
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Add Employee</button>
+    </form>
+</div>
+
+<script>
+    // Walidacja formularza po kliknięciu
+    const form = document.getElementById('employeeForm');
+    form.addEventListener('submit', function(event) {
+        const formControls = form.querySelectorAll('.form-control');
+
+        formControls.forEach(function(input) {
+            if (!input.checkValidity()) {
+                input.classList.add('is-invalid');
+            } else {
+                input.classList.remove('is-invalid');
+            }
+        });
+
+        if (!form.checkValidity()) {
+            event.preventDefault();  // Zatrzymaj wysyłanie formularza, jeśli są błędy
+        }
+    });
+</script>
+
+</body>
+</html>

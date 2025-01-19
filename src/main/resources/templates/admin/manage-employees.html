@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Manage Employees</title>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css}"/>
+    <style>
+        .form-group label {
+            font-weight: bold;
+        }
+        .form-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .form-container .col-sm-6 {
+            width: 48%;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-5">
+    <h1>Manage Employees</h1>
+    <div th:if="${#lists.isEmpty(employees)}">
+        <p>No employees found.</p>
+    </div>
+
+    <!-- Przycisk do przejścia do formularza dodawania pracownika -->
+    <a href="/admin/employees/add" class="btn btn-success mb-4">Add New Employee</a>
+
+    <h2 class="mt-5">Current Employees</h2>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Imię</th>
+            <th>Nazwisko</th>
+            <th>Email</th>
+            <th>Telefon</th>
+            <th>Pesel</th>
+            <th>Płeć</th>
+            <th>Akcje</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="employee : ${employees}">
+            <td th:text="${employee.nr_pracownika}"></td>
+            <td th:text="${employee.imie}"></td>
+            <td th:text="${employee.nazwisko}"></td>
+            <td th:text="${employee.email}"></td>
+            <td th:text="${employee.telefon}"></td>
+            <td th:text="${employee.pesel}"></td>
+            <td th:text="${employee.plec}"></td>
+            <td>
+                <form method="post" th:action="@{/admin/employees/delete}">
+                    <input type="hidden" name="id" th:value="${employee.nr_pracownika}"/>
+                    <button type="submit" class="btn btn-danger">Usuń</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+
+</div>
+</body>
+</html>
