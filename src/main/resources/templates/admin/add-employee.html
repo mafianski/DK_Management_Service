@@ -63,8 +63,8 @@
                 </div>
                 <div class="form-group">
                     <label class="required" for="phoneNumber">Numer telefonu:</label>
-                    <input type="text" id="phoneNumber" name="phoneNumber" class="form-control" required/>
-                    <div class="invalid-feedback">Numer telefonu jest wymagany.</div>
+                    <input type="text" id="phoneNumber" name="phoneNumber" class="form-control" maxlength="15" pattern="^\d{1,15}$" required/>
+                    <div class="invalid-feedback">Numer telefonu jest wymagany, powinien składać się wyłącznie z cyfr i mieć maksymalnie 15 znaków.</div>
                 </div>
                 <div class="form-group">
                     <label class="required" for="email">Adres email:</label>
@@ -73,7 +73,9 @@
                 </div>
                 <div class="form-group">
                     <label for="pesel">PESEL:</label>
-                    <input type="text" id="pesel" name="pesel" class="form-control"/>
+                    <input type="text" id="pesel" name="pesel" class="form-control" maxlength="11" pattern="^\d{11}$"
+                           title="PESEL powinien składać się z dokładnie 11 cyfr."/>
+                    <div class="invalid-feedback">PESEL powinien składać się z dokładnie 11 cyfr.</div>
                 </div>
                 <div class="form-group">
                     <label class="required" for="gender">Płeć:</label>
@@ -100,28 +102,30 @@
             <div class="col-sm-6">
                 <div class="form-group">
                     <label class="required" for="addressCity">Miasto:</label>
-                    <input type="text" id="addressCity" name="addressCity" class="form-control" required/>
-                    <div class="invalid-feedback">Miasto jest wymagane.</div>
+                    <input type="text" id="addressCity" name="addressCity" class="form-control" maxlength="30" required/>
+                    <div class="invalid-feedback">Miasto jest wymagane i nie może przekraczać 30 znaków.</div>
                 </div>
                 <div class="form-group">
                     <label class="required" for="addressStreet">Ulica:</label>
-                    <input type="text" id="addressStreet" name="addressStreet" class="form-control" required/>
-                    <div class="invalid-feedback">Ulica jest wymagana.</div>
+                    <input type="text" id="addressStreet" name="addressStreet" class="form-control" maxlength="30" required/>
+                    <div class="invalid-feedback">Ulica jest wymagana i nie może przekraczać 30 znaków.</div>
                 </div>
                 <div class="form-group">
                     <label class="required" for="addressBuildingNumber">Numer budynku:</label>
-                    <input type="text" id="addressBuildingNumber" name="addressBuildingNumber" class="form-control" required/>
-                    <div class="invalid-feedback">Numer budynku jest wymagany.</div>
+                    <input type="text" id="addressBuildingNumber" name="addressBuildingNumber" class="form-control" maxlength="5" required/>
+                    <div class="invalid-feedback">Numer budynku jest wymagany i nie może przekraczać 5 znaków.</div>
                 </div>
                 <div class="form-group">
                     <label for="addressLocalNumber">Numer lokalu:</label>
-                    <input type="text" id="addressLocalNumber" name="addressLocalNumber" class="form-control"/>
+                    <input type="text" id="addressLocalNumber" name="addressLocalNumber" class="form-control" maxlength="5"/>
+                    <div class="invalid-feedback">Numer lokalu nie może przekraczać 5 znaków.</div>
                 </div>
                 <div class="form-group">
                     <label class="required" for="postName">Poczta:</label>
-                    <input type="text" id="postName" name="postName" class="form-control" required/>
-                    <div class="invalid-feedback">jest wymagana.</div>
+                    <input type="text" id="postName" name="postName" class="form-control" maxlength="30" required/>
+                    <div class="invalid-feedback">Poczta jest wymagana i nie może przekraczać 30 znaków.</div>
                 </div>
+
                 <div class="form-group">
                     <label class="required" for="postalCode">Kod pocztowy:</label>
                     <input type="text" id="postalCode" name="postalCode" class="form-control" required

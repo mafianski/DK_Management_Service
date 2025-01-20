@@ -17,6 +17,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 public class RegistrationController {
@@ -54,20 +55,27 @@ public class RegistrationController {
         int id = 0;
         List<Uczestnicy> uczestnicy = uczetnikDAO.list();
         for (Uczestnicy uczestnik1 : uczestnicy) {
+            if(uczestnik1.getEmail() == null) {
+                uczestnik1.setEmail("");
+            }
+            if(uczestnik1.getTelefon() == null) {
+                uczestnik1.setTelefon("");
+            }
             if (uczestnik1.equals(uczestnik)) {
+                System.out.println(uczestnik1.getNr_uczestnika());
                 id = uczestnik1.getNr_uczestnika();
             }
         }
 
         // Przykład wyświetlenia danych w logach
-        System.out.println("nr_uczestnika: " + id);
+        /*System.out.println("nr_uczestnika: " + id);
         System.out.println("Imię: " + userDTO.getFirstName());
         System.out.println("Nazwisko: " + userDTO.getLastName());
         System.out.println("Data urodzenia: " + userDTO.getDob());
         System.out.println("Nr telefonu: " + userDTO.getPhoneNumber());
         System.out.println("E-mail: " + userDTO.getEmail());
         System.out.println("Login: " + userDTO.getUsername());
-        System.out.println("Hasło (z hash'em): " + hashedPassword);
+        System.out.println("Hasło (z hash'em): " + hashedPassword);*/
 
         // Możesz zapisać dane do pliku CSV
         try (FileWriter writer = new FileWriter("users.csv", true);

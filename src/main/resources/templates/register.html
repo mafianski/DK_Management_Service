@@ -4,6 +4,17 @@
     <meta charset="UTF-8"/>
     <title>Rejestracja</title>
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css}"/>
+    <style>
+        .form-group label {
+            font-weight: bold;
+        }
+
+        .required::after {
+            content: "*";
+            color: red;
+            margin-left: 5px;
+        }
+    </style>
 </head>
 <body>
 
@@ -18,45 +29,45 @@
             <form method="post" th:action="@{/register}">
                 <!-- Imię -->
                 <div class="form-group">
-                    <label for="firstName">Imię:</label>
+                    <label class="required" for="firstName">Imię:</label>
                     <input id="firstName" type="text" class="form-control" name="firstName" required maxlength="20"/>
                 </div>
 
                 <!-- Nazwisko -->
                 <div class="form-group">
-                    <label for="lastName">Nazwisko:</label>
+                    <label class="required" for="lastName">Nazwisko:</label>
                     <input id="lastName" type="text" class="form-control" name="lastName" required maxlength="20"/>
                 </div>
 
                 <!-- Data Urodzenia -->
                 <div class="form-group">
-                    <label for="dob">Data urodzenia:</label>
+                    <label class="required" for="dob">Data urodzenia:</label>
                     <input id="dob" type="date" class="form-control" name="dob" required/>
                 </div>
 
                 <!-- Numer Telefonu -->
                 <div class="form-group">
-                    <label for="phoneNumber">Numer telefonu (niewymagany):</label>
+                    <label for="phoneNumber">Numer telefonu:</label>
                     <input id="phoneNumber" type="text" class="form-control" name="phoneNumber" maxlength="15" pattern="^\d{1,15}$"/>
                     <small class="form-text text-muted">Numer telefonu może zawierać maksymalnie 15 cyfr.</small>
                 </div>
 
                 <!-- E-mail -->
                 <div class="form-group">
-                    <label for="email">Adres email (niewymagany):</label>
+                    <label for="email">Adres email:</label>
                     <input id="email" type="email" class="form-control" name="email" maxlength="40"/>
                 </div>
 
                 <!-- Login -->
                 <div class="form-group">
-                    <label for="username">Nazwa użytkownika:</label>
-                    <input id="username" type="text" class="form-control" name="username" required/>
+                    <label class="required" for="username">Nazwa użytkownika:</label>
+                    <input id="username" type="text" class="form-control" name="username" maxlength="30"required/>
                 </div>
 
                 <!-- Hasło -->
                 <div class="form-group">
-                    <label for="password">Hasło:</label>
-                    <input id="password" type="password" class="form-control" name="password" required/>
+                    <label  class="required" for="password">Hasło:</label>
+                    <input id="password" type="password" class="form-control" name="password" maxlength="30" required/>
                 </div>
 
                 <!-- Submit -->

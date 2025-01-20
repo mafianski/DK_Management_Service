@@ -19,7 +19,7 @@ public class Pracownicy {
     public Pracownicy() {
     }
 
-    public Pracownicy(int nr_pracownika, String imie, String nazwisko, String data_urodzenia, String email, String telefon, String pesel, String plec, int nr_domu_kultury, int nr_adresu, int nr_stanowiska) {
+    public Pracownicy(int nr_pracownika, String imie, String nazwisko, String data_urodzenia, String telefon, String email, String pesel, String plec, int nr_domu_kultury, int nr_adresu, int nr_stanowiska) {
         super();
         this.nr_pracownika = nr_pracownika;
         this.imie = imie;

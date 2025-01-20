@@ -5,6 +5,17 @@
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css}"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
+    <style>
+        .form-group label {
+            font-weight: bold;
+        }
+
+        .required::after {
+            content: "*";
+            color: red;
+            margin-left: 5px;
+        }
+    </style>
 </head>
 <body>
 <div th:replace="fragments/header :: header"></div>
@@ -15,13 +26,13 @@
     <!-- Formularz dodawania nowego stanowiska -->
     <form method="post" th:action="@{/admin/employees/positions/add}">
         <div class="form-group">
-            <label for="nazwa">Nazwa stanowiska</label>
-            <input type="text" id="nazwa" name="nazwa" class="form-control" required/>
+            <label class="required" for="nazwa">Nazwa stanowiska:</label>
+            <input type="text" id="nazwa" name="nazwa" class="form-control" maxlength="30" required/>
         </div>
 
         <div class="form-group">
-            <label for="opis">Opis stanowiska</label>
-            <textarea id="opis" name="opis" class="form-control" rows="4" required></textarea>
+            <label class="required" for="opis">Opis stanowiska:</label>
+            <textarea id="opis" name="opis" class="form-control" rows="4" maxlength="400" required></textarea>
         </div>
 
         <div class="form-group">

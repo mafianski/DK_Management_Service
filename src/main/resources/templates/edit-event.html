@@ -3,6 +3,17 @@
 <head>
   <title>Edycja Wydarzenia</title>
   <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css}"/>
+  <style>
+    .form-group label {
+      font-weight: bold;
+    }
+
+    .required::after {
+      content: "*";
+      color: red;
+      margin-left: 5px;
+    }
+  </style>
 </head>
 <body>
 <div th:replace="fragments/header :: header"></div>
@@ -13,28 +24,28 @@
     <input type="hidden" name="eventId" th:value="${wydarzenie.nr_wydarzenia}"/>
 
     <div class="form-group">
-      <label for="name">Nazwa:</label>
-      <input type="text" class="form-control" id="name" name="name" th:value="${wydarzenie.nazwa}" required>
+      <label class="required" for="name">Nazwa:</label>
+      <input type="text" class="form-control" id="name" name="name" th:value="${wydarzenie.nazwa}" maxlength="40" required>
     </div>
 
     <div class="form-group">
-      <label for="capacity">Pojemność:</label>
+      <label class="required" for="capacity">Pojemność:</label>
       <input type="number" class="form-control" id="capacity" name="capacity" th:value="${wydarzenie.liczba_miejsc}" required>
     </div>
 
     <div class="form-group">
-      <label for="startDate">Data rozpoczęcia:</label>
+      <label class="required" for="startDate">Data rozpoczęcia:</label>
       <input type="date" class="form-control" id="startDate" name="startDate" th:value="${wydarzenie.data_start}" required>
     </div>
 
     <div class="form-group">
-      <label for="endDate">Data zakończenia:</label>
+      <label class="required" for="endDate">Data zakończenia:</label>
       <input type="date" class="form-control" id="endDate" name="endDate" th:value="${wydarzenie.data_koniec}" required>
     </div>
 
     <!-- Nowe pole dla wyboru numeru sali -->
     <div class="form-group">
-      <label for="roomNumber">Sala:</label>
+      <label class="required" for="roomNumber">Sala:</label>
       <select class="form-control" id="roomNumber" name="roomNumber" required>
         <option value="" th:selected="*{wydarzenie.nr_sali == null}">Wybierz salę</option>
         <!-- Lista sal z bazy danych -->

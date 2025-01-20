@@ -222,7 +222,6 @@ public class EmployeeDTO {
         Stanowiska stanowiska = new Stanowiska();
 
         List<Poczty> pocztyList = pocztyDAO.list();
-        System.out.println("Poczty: " + pocztyList);
         int idPoczty = 0;
 
         for (Poczty p : pocztyList) {
@@ -244,10 +243,9 @@ public class EmployeeDTO {
                 }
             }
         }
-        System.out.println("idPoczty: " + idPoczty);
+
 
         List<Adresy> adresyList = adresyDAO.list();
-        System.out.println("Adresy: " + adresyList);
         int idAdresu = 0;
         for (Adresy a : adresyList) {
             if (a.getMiasto().equals(employeeDTO.getAddressCity()) && a.getUlica().equals(employeeDTO.getAddressStreet())
@@ -277,12 +275,9 @@ public class EmployeeDTO {
                 }
             }
         }
-        System.out.println("idAdresu: " + idAdresu);
 
         List<Stanowiska> stanowiskaList = stanowiskaDAO.list();
-        System.out.println("Stanowiska: " + stanowiskaList);
         int idStanowiska = Integer.parseInt(employeeDTO.getPositionName());
-        System.out.println("idStanowiska: " + idStanowiska);
 
         Pracownicy pracownik = new Pracownicy();
         pracownik.setImie(employeeDTO.getFirstName());
@@ -298,11 +293,18 @@ public class EmployeeDTO {
         pracownik.setNr_stanowiska(idStanowiska);
         pracownicyDAO.save(pracownik);
 
+        System.out.println("Pracownik: " + pracownik.toString());
 
         id = 0;
         List<Pracownicy> pracownicy = pracownicyDAO.list();
         for (Pracownicy pracownik1 : pracownicy) {
+            if(pracownik1.getPesel() == null) {
+                pracownik1.setPesel("");
+
+            }
+            System.out.println("Pracownik1: " + pracownik1.toString());
             if (pracownik1.equals(pracownik)) {
+                System.out.println("JEST RÓWNY");
                 id = pracownik1.getNr_pracownika();
             }
         }

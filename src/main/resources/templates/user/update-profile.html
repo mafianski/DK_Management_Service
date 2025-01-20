@@ -18,6 +18,11 @@
             padding-top: 20px;
             border-top: 1px solid #ddd;
         }
+        .required::after {
+            content: "*";
+            color: red;
+            margin-left: 5px;
+        }
     </style>
 </head>
 <body>
@@ -37,31 +42,31 @@
 
                 <!-- Imię -->
                 <div class="form-group">
-                    <label for="firstName">Imię:</label>
+                    <label class="required" for="firstName">Imię:</label>
                     <input id="firstName" type="text" class="form-control" name="firstName" th:value="${userDTO.firstName}" required maxlength="20"/>
                 </div>
 
                 <!-- Nazwisko -->
                 <div class="form-group">
-                    <label for="lastName">Nazwisko:</label>
+                    <label class="required" for="lastName">Nazwisko:</label>
                     <input id="lastName" type="text" class="form-control" name="lastName" th:value="${userDTO.lastName}" required maxlength="20"/>
                 </div>
 
                 <!-- Data Urodzenia -->
                 <div class="form-group">
-                    <label for="dob">Data urodzenia:</label>
+                    <label class="required" for="dob">Data urodzenia:</label>
                     <input id="dob" type="date" class="form-control" name="dob" th:value="${userDTO.dob}" required/>
                 </div>
 
                 <!-- Numer Telefonu -->
                 <div class="form-group">
-                    <label for="phoneNumber">Numer telefonu (niewymagany):</label>
+                    <label for="phoneNumber">Numer telefonu:</label>
                     <input id="phoneNumber" type="text" class="form-control" name="phoneNumber" th:value="${userDTO.phoneNumber}" maxlength="15" pattern="^\d{1,15}$"/>
                 </div>
 
                 <!-- E-mail -->
                 <div class="form-group">
-                    <label for="email">Adres email (niewymagany):</label>
+                    <label for="email">Adres email:</label>
                     <input id="email" type="email" class="form-control" name="email" th:value="${userDTO.email}" maxlength="40"/>
                 </div>
 

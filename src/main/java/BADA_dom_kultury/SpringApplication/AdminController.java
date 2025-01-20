@@ -68,18 +68,6 @@ public class AdminController {
         } else if ("Female".equals(employeeDTO.getGender())) {
             employeeDTO.setGender("K");
         }
-        System.out.println("Imię: " + employeeDTO.getFirstName());
-        System.out.println("Nazwisko: " + employeeDTO.getLastName());
-        System.out.println("Data urodzenia: " + employeeDTO.getDob());
-        System.out.println("Nr telefonu: " + employeeDTO.getPhoneNumber());
-        System.out.println("E-mail: " + employeeDTO.getEmail());
-        System.out.println("Pesel: " + employeeDTO.getPesel());
-        System.out.println("Płeć: " + employeeDTO.getGender());
-        System.out.println("Nr domu kultury: " + employeeDTO.getHouseNumber());
-        System.out.println("Miasto:" + employeeDTO.getAddressCity());
-        System.out.println("Ulica:" + employeeDTO.getAddressStreet());
-        System.out.println("Lokal:" + employeeDTO.getAddressLocalNumber());
-
 
         // Dodawanie pracownika do bazy danych
         employeeDTO.addEmployeeToDatabase(employeeDTO, jdbcTemplate);
