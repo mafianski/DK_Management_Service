@@ -39,13 +39,15 @@ public class EventController {
 
 
         WydarzenieDAO wydarzenieDAO = new WydarzenieDAO(jdbcTemplate);
-        List<Wydarzenie> wydarzenia = wydarzenieDAO.list();
+        //List<Wydarzenie> wydarzenia = wydarzenieDAO.list();
+        List<Wydarzenie> wydarzenia = wydarzenieDAO.leftPlacesList();
 
         /*List<Wydarzenie> wydarzenia = List.of(
                 new Wydarzenie(1, "Koncert", 100, "01.02.2025", "01.02.2025", 2, 1),
                 new Wydarzenie(2, "Warsztaty", 200, "03.02.2025", "03.02.2025", 3, 1),
                 new Wydarzenie(3, "Wystawa", 50, "05.02.2025", "10.02.2025", 1, 1)
         );*/
+
         model.addAttribute("wydarzenia", wydarzenia);
         return "events"; // Strona wyświetlania wydarzeń dla użytkowników
     }

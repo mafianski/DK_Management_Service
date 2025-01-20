@@ -271,4 +271,46 @@ public class WydarzenieDAO {
         }
 
     }
+
+    public List<Wydarzenie> leftPlacesList(){
+        String sql = "SELECT w.nr_wydarzenia, w.nazwa, w.liczba_miejsc, w.data_start, w.data_koniec, w.nr_sali, w.nr_domu_kultury, w.liczba_miejsc - COUNT(uw.nr_uczestnika) AS liczba_wolnych FROM Wydarzenia w LEFT JOIN Uczestnik_Wydarzenie uw ON w.nr_wydarzenia = uw.nr_wydarzenia GROUP BY w.nr_wydarzenia, w.nazwa, w.liczba_miejsc, w.data_start, w.data_koniec, w.nr_sali, w.nr_domu_kultury ORDER BY w.data_start ASC";
+        try {
+            List<Wydarzenie> listWydarzenie = jdbcTemplate.query(sql, (rs, rowNum) -> {
+                // Pobieranie daty jako String z bazy danych
+                String dataStartString = rs.getString("data_start");
+                String dataKoniecString = rs.getString("data_koniec");
+
+                // Sformatowanie daty do 'dd.MM.yyyy'
+                String formattedDataStart = null;
+                String formattedDataKoniec = null;
+
+                if (dataStartString != null) {
+                    // Wybieramy tylko część daty (dzień, miesiąc, rok)
+                    formattedDataStart = dataStartString.substring(0, 10);  // Zaczynamy od pierwszych 10 znaków (yyyy-MM-dd)
+                    // Możesz również dodatkowo zmienić format (np. na 'dd.MM.yyyy'), jeśli jest taka potrzeba
+                    // formattedDataStart = formattedDataStart.replace("-", ".");
+                }
+
+                if (dataKoniecString != null) {
+                    formattedDataKoniec = dataKoniecString.substring(0, 10);  // Podobnie dla daty końca
+                    // formattedDataKoniec = formattedDataKoniec.replace("-", ".");
+                }
+
+                return new Wydarzenie(
+                        rs.getInt("nr_wydarzenia"),
+                        rs.getString("nazwa"),
+                        rs.getInt("liczba_wolnych"),
+                        formattedDataStart,  // Przekazywanie już sformatowanej daty
+                        formattedDataKoniec,
+                        rs.getInt("nr_sali"),
+                        3
+                );
+            });
+
+            return listWydarzenie;
+        } catch (Exception e) {
+            System.out.println("Error executing query: " + e.toString());
+            throw e;
+        }
+    }
 }
