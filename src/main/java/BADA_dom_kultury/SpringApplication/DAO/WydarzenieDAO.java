@@ -1,6 +1,7 @@
 package BADA_dom_kultury.SpringApplication.DAO;
 
 
+import BADA_dom_kultury.SpringApplication.EventManagment;
 import BADA_dom_kultury.SpringApplication.Tables.Wydarzenie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -173,5 +174,101 @@ public class WydarzenieDAO {
     public void delete(int nr_wydarzenia){
         String sql = "DELETE FROM Wydarzenia WHERE nr_wydarzenia = ?";
         jdbcTemplate.update(sql, nr_wydarzenia);
+    }
+
+    public List<Wydarzenie> getAttendedEvents(Integer userId) {
+        String sql = "SELECT * FROM wydarzenia INNER JOIN uczestnik_wydarzenie ON wydarzenia.Nr_wydarzenia = uczestnik_wydarzenie.nr_wydarzenia WHERE uczestnik_wydarzenie.nr_uczestnika = ?";
+        try {
+            List<Wydarzenie> listWydarzenie = jdbcTemplate.query(sql, new Object[]{userId}, (rs, rowNum) -> {
+                // Pobieranie daty jako String z bazy danych
+                String dataStartString = rs.getString("data_start");
+                String dataKoniecString = rs.getString("data_koniec");
+
+                // Sformatowanie daty do 'dd.MM.yyyy'
+                String formattedDataStart = null;
+                String formattedDataKoniec = null;
+
+                if (dataStartString != null) {
+                    // Wybieramy tylko część daty (dzień, miesiąc, rok)
+                    formattedDataStart = dataStartString.substring(0, 10);  // Zaczynamy od pierwszych 10 znaków (yyyy-MM-dd)
+                    // Możesz również dodatkowo zmienić format (np. na 'dd.MM.yyyy'), jeśli jest taka potrzeba
+                    // formattedDataStart = formattedDataStart.replace("-", ".");
+                }
+
+                if (dataKoniecString != null) {
+                    formattedDataKoniec = dataKoniecString.substring(0, 10);  // Podobnie dla daty końca
+                    // formattedDataKoniec = formattedDataKoniec.replace("-", ".");
+                }
+
+                return new Wydarzenie(
+                        rs.getInt("nr_wydarzenia"),
+                        rs.getString("nazwa"),
+                        rs.getInt("liczba_miejsc"),
+                        formattedDataStart,  // Przekazywanie już sformatowanej daty
+                        formattedDataKoniec,
+                        rs.getInt("nr_sali"),
+                        rs.getInt("nr_domu_kultury")
+                );
+            });
+
+            for (Wydarzenie wydarzenie : listWydarzenie) {
+                wydarzenie.addImageUrl(wydarzenie.getNazwa());
+            }
+            return listWydarzenie;
+        } catch (Exception e) {
+            System.out.println("Error executing query: " + e.toString());
+            throw e;
+        }
+
+    }
+
+    public boolean isEventAssigned(int nr_sali) {
+        String sql = "SELECT COUNT(*) FROM WYDARZENIA WHERE nr_sali = ?";
+        Integer count = jdbcTemplate.queryForObject(sql, new Object[]{nr_sali}, Integer.class);
+        return count != null && count > 0;
+    }
+
+    public List<EventManagment> getListForEvents(){
+        String sql = "SELECT w.nr_wydarzenia, w.nazwa, w.liczba_miejsc, w.data_start, w.data_koniec, w.nr_sali, w.nr_domu_kultury, COUNT(uw.nr_uczestnika) AS liczba_zapisanych, s.nazwa AS nazwa_sali FROM WYDARZENIA w LEFT JOIN uczestnik_wydarzenie uw ON w.nr_wydarzenia = uw.nr_wydarzenia LEFT JOIN sale s ON w.nr_sali = s.nr_sali GROUP BY w.nr_wydarzenia, w.nazwa, w.liczba_miejsc, w.data_start, w.data_koniec, w.nr_sali, w.nr_domu_kultury, s.nazwa";
+        try {
+            List<EventManagment> listWydarzenie = jdbcTemplate.query(sql, (rs, rowNum) -> {
+                // Pobieranie daty jako String z bazy danych
+                String dataStartString = rs.getString("data_start");
+                String dataKoniecString = rs.getString("data_koniec");
+
+                // Sformatowanie daty do 'dd.MM.yyyy'
+                String formattedDataStart = null;
+                String formattedDataKoniec = null;
+
+                if (dataStartString != null) {
+                    // Wybieramy tylko część daty (dzień, miesiąc, rok)
+                    formattedDataStart = dataStartString.substring(0, 10);  // Zaczynamy od pierwszych 10 znaków (yyyy-MM-dd)
+                    // Możesz również dodatkowo zmienić format (np. na 'dd.MM.yyyy'), jeśli jest taka potrzeba
+                    // formattedDataStart = formattedDataStart.replace("-", ".");
+                }
+
+                if (dataKoniecString != null) {
+                    formattedDataKoniec = dataKoniecString.substring(0, 10);  // Podobnie dla daty końca
+                    // formattedDataKoniec = formattedDataKoniec.replace("-", ".");
+                }
+
+                return new EventManagment(
+                        rs.getInt("nr_wydarzenia"),
+                        rs.getString("nazwa"),
+                        rs.getInt("liczba_miejsc"),
+                        formattedDataStart,  // Przekazywanie już sformatowanej daty
+                        formattedDataKoniec,
+                        rs.getString("nazwa_sali"),
+                        3,
+                        rs.getInt("liczba_zapisanych")
+                );
+            });
+
+            return listWydarzenie;
+        } catch (Exception e) {
+            System.out.println("Error executing query: " + e.toString());
+            throw e;
+        }
+
     }
 }

@@ -158,4 +158,5 @@ public class AdminController {
         stanowiskaDAO.delete(id);
         return "redirect:/admin/employees/positions/add";
     }
+
 }

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edytuj salę</title>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css}"/>
+    <style>
+        .form-group label {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+
+<div class="container mt-5">
+    <h1>Edytuj salę</h1>
+    <form th:action="@{/admin/sales/edit}" th:object="${sale}" method="post">
+        <input type="hidden" th:field="*{nr_sali}" />
+
+        <div class="form-group">
+            <label for="nazwa">Nazwa sali</label>
+            <input type="text" class="form-control" id="nazwa" th:field="*{nazwa}" placeholder="Wpisz nazwę sali" required />
+        </div>
+
+        <div class="form-group">
+            <label for="typ_sali">Typ sali</label>
+            <select id="typ_sali" class="form-control" th:field="*{typ_sali}" required>
+                <option value="Komputerowa" th:selected="${sale.typ_sali == 'Komputerowa'}">Komputerowa</option>
+                <option value="Koncertowa" th:selected="${sale.typ_sali == 'Koncertowa'}">Koncertowa</option>
+                <option value="Kinowa" th:selected="${sale.typ_sali == 'Kinowa'}">Kinowa</option>
+                <option value="Plastyczna" th:selected="${sale.typ_sali == 'Plastyczna'}">Plastyczna</option>
+                <option value="Warsztatowa" th:selected="${sale.typ_sali == 'Warsztatowa'}">Warsztatowa</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="liczba_miejsc">Liczba miejsc</label>
+            <input type="number" class="form-control" id="liczba_miejsc" th:field="*{liczba_miejsc}" placeholder="Wpisz liczbę miejsc" required />
+        </div>
+
+        <div class="form-group">
+            <label for="opis">Opis</label>
+            <textarea class="form-control" id="opis" th:field="*{opis}" rows="3" placeholder="Wpisz opis sali" required></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
+        <a href="/admin/sales" class="btn btn-secondary ml-2">Powrót</a>
+    </form>
+</div>
+
+</body>
+</html>

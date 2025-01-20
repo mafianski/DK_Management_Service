@@ -60,4 +60,22 @@ public class Uczestnik_WydarzenieDAO {
         String sql = "DELETE FROM Uczestnik_Wydarzenie WHERE nr_uczestnika = ?";
         jdbcTemplate.update(sql, nr_uczestnika);
     }
+
+    public boolean registerUserForEvent(int nr_uczestnika, int nr_wydarzenia) {
+        String sql = "SELECT COUNT(*) FROM UCZESTNIK_WYDARZENIE WHERE nr_uczestnika = ? AND nr_wydarzenia = ?";
+        Integer count = jdbcTemplate.queryForObject(sql, Integer.class, nr_uczestnika, nr_wydarzenia);
+        if(count != null && count > 0) {
+            return false;
+        }
+        Uczestnik_Wydarzenie uczestnik_wydarzenie = new Uczestnik_Wydarzenie();
+        uczestnik_wydarzenie.setNr_uczestnika(nr_uczestnika);
+        uczestnik_wydarzenie.setNr_wydarzenia(nr_wydarzenia);
+        save(uczestnik_wydarzenie);
+        return true;
+    }
+
+    public void delete(int nr_uczestnika, int nr_wydarzenia) {
+        String sql = "DELETE FROM Uczestnik_Wydarzenie WHERE nr_uczestnika = ? AND nr_wydarzenia = ?";
+        jdbcTemplate.update(sql, nr_uczestnika, nr_wydarzenia);
+    }
 }

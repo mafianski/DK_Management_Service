@@ -82,6 +82,16 @@
 <header th:replace="fragments/header :: header"></header>
 
 <div class="container mt-4">
+    <!-- Komunikaty o sukcesie lub błędzie -->
+    <div th:if="${param.success}" class="alert alert-success text-center">
+        Pomyślnie zapisano się na wydarzenie!
+    </div>
+    <div th:if="${param.error}" class="alert alert-danger text-center">
+        Jesteś już zapisany na to wydarzenie!
+    </div>
+
+
+
     <!-- Tekst na górze strony -->
     <div th:if="${#httpServletRequest.remoteUser == null}" class="alert alert-info text-center">
         Aby zapisać się na wydarzenie, <a th:href="@{/login}">zaloguj się</a>.
@@ -107,7 +117,6 @@
             </div>
         </div>
     </div>
-
 </div>
 
 <!-- Modal dla szczegółów wydarzenia -->

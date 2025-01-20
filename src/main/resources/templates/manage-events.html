@@ -18,15 +18,15 @@
         .table td:nth-child(6),
         .table th:nth-child(7),
         .table td:nth-child(7) {
-            width: 8%; /* Mniejsze szerokości dla większości kolumn */
+            width: 8%;
         }
         .table th:nth-child(2),
         .table td:nth-child(2) {
-            width: 12%; /* Większa szerokość dla nazwy */
+            width: 12%;
         }
         .btn-action {
-            margin-right: 5px; /* Odstęp między przyciskami */
-            padding: 5px 10px; /* Zmniejszony rozmiar przycisków */
+            margin-right: 5px;
+            padding: 5px 10px;
         }
     </style>
 </head>
@@ -34,6 +34,8 @@
 <div th:replace="fragments/header :: header"></div>
 <div class="container mt-5">
     <h1 class="mt-4">Zarządzaj wydarzeniami</h1>
+
+    <a th:if="${isAdmin}" th:href="@{/manage-events/new}" class="btn btn-success mb-3">Dodaj nowe wydarzenie</a>
 
     <table class="table table-bordered mt-3">
         <thead>
@@ -43,8 +45,8 @@
             <th>Miejsca</th>
             <th>Data rozpoczęcia</th>
             <th>Data zakończenia</th>
-            <th>Nr sali</th>
-            <th>Nr domu kultury</th>
+            <th>Nazwa sali</th> <!-- Zmieniamy "Nr sali" na "Nazwa sali" -->
+            <th>Liczba uczestników</th>
             <th>Akcje</th>
         </tr>
         </thead>
@@ -55,15 +57,16 @@
             <td th:text="${wydarzenie.liczba_miejsc}"></td>
             <td th:text="${wydarzenie.data_start}"></td>
             <td th:text="${wydarzenie.data_koniec}"></td>
-            <td th:text="${wydarzenie.nr_sali}"></td>
-            <td th:text="${wydarzenie.nr_domu_kultury}"></td>
+            <td th:text="${wydarzenie.nazwa_sali}"></td> <!-- Wyświetlamy nazwę sali -->
+            <td th:text="${wydarzenie.liczba_zapisanych}"></td>  <!-- Wyświetlamy liczbę uczestników -->
             <td>
-                <!--TODO: działanie przycisków -->
-                <button type="button" class="btn btn-success btn-sm btn-action">Uczestnicy</button>
-                <form th:action="@{/manage-events/modify}" method="post" class="d-inline">
-                    <input type="hidden" name="eventId" th:value="${wydarzenie.nr_wydarzenia}"/>
-                    <button type="submit" class="btn btn-primary btn-sm btn-action">Modyfikuj</button>
-                </form>
+                <!-- Przycisk "Uczestnicy" -->
+                <a th:if="${isAdmin}" th:href="@{/manage-events/participants(eventId=${wydarzenie.nr_wydarzenia})}" class="btn btn-info btn-sm btn-action">Uczestnicy</a>
+
+                <!-- Przycisk "Modyfikuj" -->
+                <a th:href="@{/manage-events/edit(eventId=${wydarzenie.nr_wydarzenia})}" class="btn btn-primary btn-sm btn-action">Modyfikuj</a>
+
+                <!-- Przycisk "Usuń" -->
                 <form th:if="${isAdmin}" th:action="@{/manage-events/delete}" method="post" class="d-inline">
                     <input type="hidden" name="eventId" th:value="${wydarzenie.nr_wydarzenia}"/>
                     <button type="submit" class="btn btn-danger btn-sm btn-action">Usuń</button>
@@ -72,6 +75,12 @@
         </tr>
         </tbody>
     </table>
+
+    <div class="row">
+        <div class="col-md-12">
+            <a th:href="@{/main_admin}" class="btn btn-primary btn-back">Powrót do panelu głównego</a>
+        </div>
+    </div>
 </div>
 
 <script th:src="@{/webjars/jquery/3.6.0/jquery.min.js}"></script>

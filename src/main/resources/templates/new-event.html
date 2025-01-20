@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Dodaj Wydarzenie</title>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css}"/>
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+<div class="container mt-5">
+    <h1 class="mt-4">Dodaj Nowe Wydarzenie</h1>
+    <form th:action="@{/manage-events/create}" method="post">
+        <div class="form-group">
+            <label for="name">Nazwa:</label>
+            <input type="text" class="form-control" id="name" name="name" required>
+        </div>
+
+        <div class="form-group">
+            <label for="capacity">Pojemność:</label>
+            <input type="number" class="form-control" id="capacity" name="capacity" required>
+        </div>
+
+        <div class="form-group">
+            <label for="startDate">Data rozpoczęcia:</label>
+            <input type="date" class="form-control" id="startDate" name="startDate" required>
+        </div>
+
+        <div class="form-group">
+            <label for="endDate">Data zakończenia:</label>
+            <input type="date" class="form-control" id="endDate" name="endDate" required>
+        </div>
+
+        <div class="form-group">
+            <label for="roomNumber">Sala:</label>
+            <select class="form-control" id="roomNumber" name="roomNumber" required>
+                <option value="" selected>Wybierz salę</option>
+                <option th:each="sala : ${sale}"
+                        th:value="${sala.nr_sali}"
+                        th:text="${sala.nazwa}">Sala</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Dodaj Wydarzenie</button>
+        <a th:href="@{/manage-events}" class="btn btn-secondary">Anuluj</a>
+    </form>
+</div>
+
+<script th:src="@{/webjars/jquery/3.6.0/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.0.0-2/js/bootstrap.min.js}"></script>
+</body>
+</html>

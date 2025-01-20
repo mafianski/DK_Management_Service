@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Uczestnicy wydarzenia</title>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css}"/>
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+<div class="container mt-5">
+    <h1 class="mt-4">Uczestnicy wydarzenia</h1>
+
+    <table class="table table-bordered mt-3">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Imię</th>
+            <th>Nazwisko</th>
+            <th>Email</th>
+            <th>Telefon</th>
+            <th>Akcje</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="uczestnik : ${uczestnicy}">
+            <td th:text="${uczestnik.nr_uczestnika}"></td>
+            <td th:text="${uczestnik.imie}"></td>
+            <td th:text="${uczestnik.nazwisko}"></td>
+            <td th:text="${uczestnik.email}"></td>
+            <td th:text="${uczestnik.telefon}"></td>
+            <td>
+                <!-- Przycisk "Usuń" -->
+                <form th:action="@{/manage-events/participants/delete}" method="post" class="d-inline">
+                    <input type="hidden" name="uczestnikId" th:value="${uczestnik.nr_uczestnika}"/>
+                    <input type="hidden" name="eventId" th:value="${eventId}"/>
+                    <button type="submit" class="btn btn-danger btn-sm">Usuń</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a th:href="@{/manage-events}" class="btn btn-primary">Powrót do zarządzania wydarzeniami</a>
+</div>
+
+<script th:src="@{/webjars/jquery/3.6.0/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.0.0-2/js/bootstrap.min.js}"></script>
+</body>
+</html>

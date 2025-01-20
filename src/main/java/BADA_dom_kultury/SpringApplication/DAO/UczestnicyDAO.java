@@ -135,4 +135,39 @@ public class UczestnicyDAO {
         jdbcTemplate.update(sql, nr_uczestnika);
     }
 
+    public List<Uczestnicy> getParticipantsForEvent(int eventId){
+        String sql = "SELECT * FROM UCZESTNICY WHERE NR_UCZESTNIKA IN (SELECT NR_UCZESTNIKA FROM UCZESTNIK_WYDARZENIE WHERE NR_WYDARZENIA = ?)";
+
+        try {
+            List<Uczestnicy> listUczestnicy = jdbcTemplate.query(sql, new Object[]{eventId}, (rs, rowNum) -> {
+                String dataUrodzenia = rs.getString("data_urodzenia");
+                String formattedDataUrodzenia = null;
+                if (dataUrodzenia != null) {
+                    // Wybieramy tylko część daty (dzień, miesiąc, rok)
+                    formattedDataUrodzenia = dataUrodzenia.substring(0, 10);  // Zaczynamy od pierwszych 10 znaków (yyyy-MM-dd)
+                    // Możesz również dodatkowo zmienić format (np. na 'dd.MM.yyyy'), jeśli jest taka potrzeba
+                    // formattedDataStart = formattedDataStart.replace("-", ".");
+                }
+
+
+                return new Uczestnicy(
+                        rs.getInt("nr_uczestnika"),
+                        rs.getString("imie"),
+                        rs.getString("nazwisko"),
+                        formattedDataUrodzenia,
+                        rs.getString("telefon"),
+                        rs.getString("email"),
+                        rs.getInt("nr_domu_kultury")
+                );
+            });
+            return listUczestnicy;
+        } catch (Exception e) {
+            System.out.println("Error executing query: " + e.toString());
+            throw e;
+        }
+    }
+
+
+
+
 }

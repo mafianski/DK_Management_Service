@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Edycja Wydarzenia</title>
+  <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css}"/>
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+<div class="container mt-5">
+  <h1 class="mt-4">Edycja Wydarzenia</h1>
+  <form th:action="@{/manage-events/edit}" method="post">
+    <!-- Przesyłanie ID wydarzenia -->
+    <input type="hidden" name="eventId" th:value="${wydarzenie.nr_wydarzenia}"/>
+
+    <div class="form-group">
+      <label for="name">Nazwa:</label>
+      <input type="text" class="form-control" id="name" name="name" th:value="${wydarzenie.nazwa}" required>
+    </div>
+
+    <div class="form-group">
+      <label for="capacity">Pojemność:</label>
+      <input type="number" class="form-control" id="capacity" name="capacity" th:value="${wydarzenie.liczba_miejsc}" required>
+    </div>
+
+    <div class="form-group">
+      <label for="startDate">Data rozpoczęcia:</label>
+      <input type="date" class="form-control" id="startDate" name="startDate" th:value="${wydarzenie.data_start}" required>
+    </div>
+
+    <div class="form-group">
+      <label for="endDate">Data zakończenia:</label>
+      <input type="date" class="form-control" id="endDate" name="endDate" th:value="${wydarzenie.data_koniec}" required>
+    </div>
+
+    <!-- Nowe pole dla wyboru numeru sali -->
+    <div class="form-group">
+      <label for="roomNumber">Sala:</label>
+      <select class="form-control" id="roomNumber" name="roomNumber" required>
+        <option value="" th:selected="*{wydarzenie.nr_sali == null}">Wybierz salę</option>
+        <!-- Lista sal z bazy danych -->
+        <option th:each="sala : ${sale}"
+                th:value="${sala.nr_sali}"
+                th:text="${sala.nazwa}"
+                th:selected="${wydarzenie.nr_sali == sala.nr_sali}">Sala</option>
+      </select>
+    </div>
+
+
+    <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
+    <a th:href="@{/manage-events}" class="btn btn-secondary">Anuluj</a>
+  </form>
+</div>
+
+<script th:src="@{/webjars/jquery/3.6.0/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.0.0-2/js/bootstrap.min.js}"></script>
+</body>
+</html>

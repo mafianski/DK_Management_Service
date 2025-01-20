@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Lista zapisów</title>
+
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+
+    <style>
+        .events-table {
+            margin-top: 30px;
+        }
+        .btn-small {
+            width: 150px;
+            padding: 5px 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div th:replace="fragments/header :: header"></div>
+
+<div class="container">
+    <div class="row events-table">
+        <div class="col-md-12">
+            <h3>Lista wydarzeń, na które jesteś zapisany</h3>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Nazwa wydarzenia</th>
+                    <th>Data początkowa</th>
+                    <th>Data końcowa</th>
+                    <th>Numer sali</th>
+                    <th>Akcja</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="event : ${attendedEvents}">
+                    <!-- Wyświetlenie nazwy wydarzenia -->
+                    <td th:text="${event.nazwa}"></td>
+                    <!-- Wyświetlenie daty początkowej -->
+                    <td th:text="${event.data_start}"></td>
+                    <!-- Wyświetlenie daty końcowej -->
+                    <td th:text="${event.data_koniec}"></td>
+                    <!-- Wyświetlenie numeru sali -->
+                    <td th:text="${event.nr_sali}"></td>
+                    <td>
+                        <form th:action="@{/unsubscribe}" method="post">
+                            <!-- Wysłanie nr_wydarzenia jako ukryte pole w formularzu -->
+                            <input type="hidden" name="eventId" th:value="${event.nr_wydarzenia}"/>
+                            <button type="submit" class="btn btn-danger btn-small">Wypisz się</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/script.js}"></script>
+
+</body>
+</html>

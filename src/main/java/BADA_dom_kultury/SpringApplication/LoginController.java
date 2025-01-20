@@ -1,4 +1,4 @@
-package BADA_dom_kultury.SpringApplication;
+/*package BADA_dom_kultury.SpringApplication;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,11 +23,13 @@ public class LoginController {
 
     @GetMapping("/login")
     public String showLoginForm() {
+        System.out.println("IM IN showLoginForm");
         return "login";  // Formularz logowania
     }
 
     @PostMapping("/login")
     public String loginUser(@RequestParam String username, @RequestParam String password, Model model) {
+        System.out.println("IM IN loginUser");
         // Wczytanie danych z pliku CSV
         try (BufferedReader br = new BufferedReader(new FileReader("users.csv"))) {
             String line;
@@ -46,6 +48,7 @@ public class LoginController {
                     if (passwordEncoder.encode(password).equals(storedHashedPassword)) {
                         // Użytkownik zalogowany pomyślnie
                         session.setAttribute("userId", uczestnikId);
+                        session.setAttribute("username", username);
                         model.addAttribute("username", username);
                         model.addAttribute("role", role);
                         return "main_user";  // Przekierowanie do strony powitalnej
@@ -64,5 +67,5 @@ public class LoginController {
             return "login";  // Błąd wczytywania pliku
         }
     }
-}
+}*/
 
